@@ -4,10 +4,10 @@ import { ThemeProvider } from '@/providers/ThemeProvider';
 import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
 
-import { Inter, Outfit, Geist } from 'next/font/google';
+import { Inter, Outfit, Geist, Figtree } from 'next/font/google';
 import { cn } from '@/lib/utils';
 
-const geist = Geist({subsets:['latin'],variable:'--font-sans'});
+const figtree = Figtree({subsets:['latin'],variable:'--font-sans'});
 
 
 // BODY FONT: Inter is the gold standard for UI readability
@@ -43,7 +43,7 @@ export default function RootLayout({
               inter.variable,
               headingFont.variable,
               "scroll-smooth"
-            , "font-sans", geist.variable)}
+            , "font-sans", figtree.variable)}
     >
       <body className="min-h-screen antialiased font-body bg-white dark:bg-slate-950 text-slate-900 dark:text-slate-200">
         <ThemeProvider>
