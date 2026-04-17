@@ -1,58 +1,71 @@
-import { useTheme } from "next-themes";
-import { useEffect, useState } from "react";
-import { Sun, Moon } from "lucide-react";
+'use client'
+
+import { useTheme } from 'next-themes'
+import { motion } from 'framer-motion'
+import { Sun, Moon } from 'lucide-react'
 
 export function ThemeToggleSwitch() {
-  const { setTheme, resolvedTheme } = useTheme();
+  const { setTheme, resolvedTheme } = useTheme()
 
-  const [isClient, setIsClient] = useState(false);
+  const currentTheme = resolvedTheme === 'dark' ? 'dark' : 'light'
 
-  useEffect(() => {
-    const frame = requestAnimationFrame(() => setIsClient(true));
-    return () => cancelAnimationFrame(frame);
-  }, []);
-
-  if (!isClient) return null;
-
-  const currentTheme = resolvedTheme === "dark" ? "dark" : "light";
   const toggleTheme = () =>
-    setTheme(currentTheme === "light" ? "dark" : "light");
+    setTheme(currentTheme === 'light' ? 'dark' : 'light')
 
   return (
     <button
       onClick={toggleTheme}
-      className="group rounded-full bg-gray-3 p-1.25 text-[#111928] outline-1 outline-primary focus-visible:outline dark:bg-[#020D1A] dark:text-current"
+      className="
+        relative flex items-center
+        rounded-full p-1
+        bg-gray-200 dark:bg-[#020D1A]
+        border border-border
+        transition-colors
+      "
+      aria-label="Toggle theme"
     >
-      <span className="sr-only">
-        Switch to {currentTheme === "light" ? "dark" : "light"} mode
-      </span>
+      {/* SLIDING INDICATOR */}
+      <motion.span
+        layout
+        transition={{ type: 'spring', stiffness: 300, damping: 25 }}
+        className="
+          absolute w-9 h-9 rounded-full
+          bg-white dark:bg-[#0A0A0A]
+          shadow-sm
+        "
+        style={{
+          left: currentTheme === 'dark' ? 'calc(100% - 36px)' : '2px',
+        }}
+      />
 
-      <span className="relative flex gap-2.5" aria-hidden>
-        {/* INDICATOR */}
-        <span
-          className={`absolute size-9.5 rounded-full border border-gray-200 bg-gray-500 dark:border-none dark:bg-dark-2
-          will-change-transform
-          transition-transform duration-300 ease-out
-          ${currentTheme === "dark"
-              ? "translate-x-12 border-none bg-dark-2 dark:group-hover:bg-dark-3"
-              : ""
-            }`}
-        />
+      {/* ICONS */}
+      <div className="relative flex gap-2">
+        {/* SUN */}
+        <motion.div
+          animate={{
+            rotate: currentTheme === 'light' ? 0 : 90,
+            scale: currentTheme === 'light' ? 1 : 0.8,
+            opacity: currentTheme === 'light' ? 1 : 0.5,
+          }}
+          transition={{ duration: 0.3 }}
+          className="w-9 h-9 flex items-center justify-center"
+        >
+          <Sun size={18} />
+        </motion.div>
 
-        {/* ICONS */}
-        {[
-          { name: "light", Icon: Sun },
-          { name: "dark", Icon: Moon },
-        ].map(({ name, Icon }) => (
-          <span
-            key={name}
-            className={`relative grid size-9.5 place-items-center rounded-full transition-colors duration-300 ${name === "dark" ? "dark:text-white" : ""
-              }`}
-          >
-            <Icon />
-          </span>
-        ))}
-      </span>
+        {/* MOON */}
+        <motion.div
+          animate={{
+            rotate: currentTheme === 'dark' ? 0 : -90,
+            scale: currentTheme === 'dark' ? 1 : 0.8,
+            opacity: currentTheme === 'dark' ? 1 : 0.5,
+          }}
+          transition={{ duration: 0.3 }}
+          className="w-9 h-9 flex items-center justify-center"
+        >
+          <Moon size={18} />
+        </motion.div>
+      </div>
     </button>
-  );
+  )
 }
