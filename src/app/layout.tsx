@@ -7,7 +7,7 @@ import Footer from '@/components/layout/Footer';
 import { Inter, Outfit, Geist } from 'next/font/google';
 import { cn } from '@/lib/utils';
 
-const inter = Inter({subsets:['latin'],variable:'--font-sans'});
+const geist = Geist({subsets:['latin'],variable:'--font-sans'});
 
 
 // BODY FONT: Inter is the gold standard for UI readability
@@ -43,7 +43,7 @@ export default function RootLayout({
               inter.variable,
               headingFont.variable,
               "scroll-smooth"
-            , "font-sans", inter.variable)}
+            , "font-sans", geist.variable)}
     >
       <body className="min-h-screen antialiased font-body bg-white dark:bg-slate-950 text-slate-900 dark:text-slate-200">
         <ThemeProvider>
