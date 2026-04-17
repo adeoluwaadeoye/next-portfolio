@@ -8,11 +8,11 @@ import {
   Inter,
   Space_Grotesk,
   JetBrains_Mono,
-  Dancing_Script, Geist } from 'next/font/google';
+  Dancing_Script, Geist, Figtree } from 'next/font/google';
 
 import { cn } from '@/lib/utils';
 
-const geist = Geist({subsets:['latin'],variable:'--font-sans'});
+const figtree = Figtree({subsets:['latin'],variable:'--font-sans'});
 
 const inter = Inter({
   subsets: ['latin'],
@@ -57,7 +57,7 @@ export default function RootLayout({
               headingFont.variable,
               jetbrainsMono.variable,
               cursiveFont.variable
-            , "font-sans", geist.variable)}
+            , "font-sans", figtree.variable)}
     >
       <body className="min-h-screen antialiased font-body">
         <ThemeProvider>
