@@ -4,37 +4,23 @@ import { ThemeProvider } from '@/providers/ThemeProvider';
 import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
 
-import {
-  Inter,
-  Space_Grotesk,
-  JetBrains_Mono,
-  Dancing_Script, Geist, Figtree } from 'next/font/google';
-
+import { Inter, Outfit, Geist } from 'next/font/google';
 import { cn } from '@/lib/utils';
 
-const figtree = Figtree({subsets:['latin'],variable:'--font-sans'});
+const geist = Geist({subsets:['latin'],variable:'--font-sans'});
 
+
+// BODY FONT: Inter is the gold standard for UI readability
 const inter = Inter({
   subsets: ['latin'],
   variable: '--font-body',
   display: 'swap',
 });
 
-const headingFont = Space_Grotesk({
+// HEADING FONT: Outfit offers a more geometric, modern "Architect" aesthetic
+const headingFont = Outfit({
   subsets: ['latin'],
   variable: '--font-heading',
-  display: 'swap',
-});
-
-const jetbrainsMono = JetBrains_Mono({
-  subsets: ['latin'],
-  variable: '--font-mono',
-  display: 'swap',
-});
-
-const cursiveFont = Dancing_Script({
-  subsets: ['latin'],
-  variable: '--font-cursive',
   display: 'swap',
 });
 
@@ -52,14 +38,14 @@ export default function RootLayout({
     <html
       lang="en"
       suppressHydrationWarning
+      // Combining the variables and setting font-body as the default
       className={cn(
               inter.variable,
               headingFont.variable,
-              jetbrainsMono.variable,
-              cursiveFont.variable
-            , "font-sans", figtree.variable)}
+              "scroll-smooth"
+            , "font-sans", geist.variable)}
     >
-      <body className="min-h-screen antialiased font-body">
+      <body className="min-h-screen antialiased font-body bg-white dark:bg-slate-950 text-slate-900 dark:text-slate-200">
         <ThemeProvider>
           <Header />
           <main className="flex flex-col min-h-[80vh]">

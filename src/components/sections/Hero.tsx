@@ -62,7 +62,7 @@ export default function Hero() {
               className="text-6xl sm:text-8xl lg:text-[clamp(5rem,9vw,9rem)] font-black leading-[0.8] tracking-tighter text-foreground uppercase"
             >
               FULLSTACK <br />
-              <span className="text-primary">
+              <span className="text-primary/80">
                 DEVELOPER
               </span>
             </motion.h1>

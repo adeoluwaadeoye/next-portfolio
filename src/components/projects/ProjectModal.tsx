@@ -104,7 +104,7 @@ export default function ProjectModal({ project, onClose }: ProjectModalProps) {
                                                 >
                                                     {/* Icon Wrapper */}
                                                     <div className="transition-transform group-hover:scale-110 duration-300">
-                                                        <TechIcon name={tech} />
+                                                        <TechIcon name={tech} className='h-10 w-10'/>
                                                     </div>
 
                                                     {/* Label - Truncated for very small screens to prevent layout breaking */}
@@ -119,7 +119,7 @@ export default function ProjectModal({ project, onClose }: ProjectModalProps) {
                                     {/* Call to Actions - Stacked for better thumb-reach on mobile */}
                                     <div className="flex flex-col gap-3 pt-4">
                                         {project.liveUrl && (
-                                            <Button asChild size="lg" className="w-full rounded-2xl font-bold h-16 text-sm shadow-xl shadow-primary/10 transition-all active:scale-95">
+                                            <Button asChild size="lg" className="w-full rounded-sm font-bold h-16 text-sm shadow-xl shadow-primary/10 transition-all active:scale-95">
                                                 <Link href={project.liveUrl} target="_blank" rel="noopener noreferrer">
                                                     Live Preview
                                                     <RiExternalLinkFill className="ml-2 h-4 w-4" />
@@ -128,7 +128,7 @@ export default function ProjectModal({ project, onClose }: ProjectModalProps) {
                                         )}
 
                                         {project.githubUrl && (
-                                            <Button asChild variant="outline" size="lg" className="w-full rounded-2xl font-bold h-16 text-sm border-2 transition-all active:scale-95">
+                                            <Button asChild variant="outline" size="lg" className="w-full rounded-sm font-bold h-16 text-sm border-2 transition-all active:scale-95">
                                                 <Link href={project.githubUrl} target="_blank" rel="noopener noreferrer">
                                                     View Code
                                                     <VscGithub className="ml-2 h-4 w-4" />
