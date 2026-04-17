@@ -84,14 +84,14 @@ export default function Hero() {
              transition={{ delay: 0.3 }}
              className="flex flex-col sm:flex-row gap-4 pt-2"
           >
-            <Button asChild size="lg" className="w-full sm:w-auto rounded-xl h-16 px-10 text-lg font-black group shadow-xl">
+            <Button size="lg" className="w-full sm:w-auto rounded-xl h-16 px-10 text-lg font-black group shadow-xl">
               <Link href="#projects">
                 See My Work 
                 <HiOutlineArrowNarrowRight className="ml-2 w-6 h-6 group-hover:translate-x-2 transition-transform" />
               </Link>
             </Button>
             
-            <Button asChild variant="outline" size="lg" className="w-full sm:w-auto rounded-xl h-16 px-10 text-lg font-black border-2 transition-all active:scale-95">
+            <Button variant="outline" size="lg" className="w-full sm:w-auto rounded-xl h-16 px-10 text-lg font-black border-2 transition-all active:scale-95">
               <Link href="/contact">
                 Get In Touch
                 <FiMousePointer className="ml-2 w-5 h-5 group-hover:rotate-12 transition-transform" />
