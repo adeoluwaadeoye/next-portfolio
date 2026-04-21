@@ -17,8 +17,6 @@ export default function Hero() {
   return (
     <section className="relative w-full min-h-screen flex flex-col justify-center py-4 md:py-8 overflow-hidden bg-background">
       
-      {/* Subtle Background Grid */}
-      <div className="absolute inset-0 bg-[radial-gradient(#e5e5e5_0.8px,transparent_1px)] dark:bg-[radial-gradient(#27272a_0.8px,transparent_1px)] bg-size-[40px_40px] opacity-30 dark:opacity-20 pointer-events-none" />
 
       <div className="relative z-10 max-w-7xl mx-auto px-6 w-full">
         

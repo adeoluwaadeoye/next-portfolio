@@ -1,10 +1,10 @@
 'use client'
 
-import React, { useRef, useState, useMemo } from 'react'
+import React, { useRef, useState, useMemo, useEffect } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
 import {
-  motion, useScroll, useSpring, useTransform, AnimatePresence,
+  motion, useScroll, useSpring, useTransform, AnimatePresence, useInView,
 } from 'framer-motion'
 import {
   FaGithub, FaExternalLinkAlt, FaRocket, FaCode, FaServer,
@@ -145,7 +145,17 @@ function TechPill({ tech }: { tech: string }) {
 // Secondary always shows bottom gradient overlay with GitHub + Live icon buttons.
 // pointerType check separates desktop hover from touch tap — no double-fire.
 function ProjectImage({ project }: { project: Project }) {
-  const [active, setActive] = useState(false)
+  const [hovered, setHovered] = useState(false)
+  const [isTouch, setIsTouch] = useState(false)
+  const ref = useRef<HTMLDivElement>(null)
+  const isInView = useInView(ref, { margin: '-15% 0px -15% 0px' })
+
+  useEffect(() => {
+    setIsTouch(!window.matchMedia('(hover: hover)').matches)
+  }, [])
+
+  const active = isTouch ? isInView : hovered
+
   const secondary = SECONDARY[project.id]
   const meta = META[project.id]
   const hasGithub = !!(project.githubUrl && project.githubUrl !== '#')
@@ -154,15 +164,10 @@ function ProjectImage({ project }: { project: Project }) {
 
   return (
     <div
+      ref={ref}
       className="relative w-full aspect-video overflow-hidden select-none"
-      onPointerEnter={e => { if (e.pointerType === 'mouse') setActive(true)  }}
-      onPointerLeave={e => { if (e.pointerType === 'mouse') setActive(false) }}
-      onPointerUp={e => {
-        if (e.pointerType === 'touch') {
-          e.currentTarget.releasePointerCapture(e.pointerId)
-          setActive(v => !v)
-        }
-      }}
+      onPointerEnter={e => { if (e.pointerType === 'mouse') setHovered(true)  }}
+      onPointerLeave={e => { if (e.pointerType === 'mouse') setHovered(false) }}
     >
       {/* ── Primary image – clean, no overlay ── */}
       <Image
@@ -253,7 +258,7 @@ function ProjectImage({ project }: { project: Project }) {
         animate={{ opacity: active ? 0 : 1 }}
         transition={{ duration: 0.25 }}
       >
-        {secondary ? 'hover · tap' : isUpcoming ? 'coming soon' : ''}
+        {secondary ? 'hover to preview' : isUpcoming ? 'coming soon' : ''}
       </motion.span>
     </div>
   )

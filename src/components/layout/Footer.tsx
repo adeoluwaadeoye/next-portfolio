@@ -26,14 +26,6 @@ export default function Footer() {
       {/* Top gradient accent */}
       <div className="absolute top-0 inset-x-0 h-px bg-linear-to-r from-transparent via-primary/40 to-transparent" />
 
-      {/* Grid texture */}
-      <div
-        className="absolute inset-0 opacity-[0.025] dark:opacity-[0.04] pointer-events-none"
-        style={{
-          backgroundImage: 'linear-gradient(var(--border) 1px, transparent 1px), linear-gradient(90deg, var(--border) 1px, transparent 1px)',
-          backgroundSize: '40px 40px',
-        }}
-      />
 
       <div className="relative z-10 max-w-7xl mx-auto px-5 sm:px-8 md:px-10 pt-10 sm:pt-14 lg:pt-16 pb-8 sm:pb-10">
 

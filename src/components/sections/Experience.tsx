@@ -29,8 +29,6 @@ const Experience = () => {
         style={{ scaleX }}
       />
 
-      {/* Background Accents */}
-      <div className="absolute inset-0 bg-[radial-gradient(#e5e5e5_0.8px,transparent_1px)] dark:bg-[radial-gradient(#27272a_0.8px,transparent_1px)] bg-size-[50px_50px] opacity-30 dark:opacity-20" />
       
       <div className="max-w-6xl mx-auto px-6 relative z-10">
         
@@ -54,25 +52,25 @@ const Experience = () => {
           </div>
 
           {/* Quick Stats */}
-          <motion.div 
+          <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="flex gap-8 p-8 rounded-3xl bg-card border border-border"
+            className="flex gap-4 sm:gap-8 p-5 sm:p-8 rounded-3xl bg-card border border-border w-full lg:w-auto"
           >
-            <div className="text-center">
-              <p className="text-4xl font-black text-primary">5+</p>
-              <p className="text-xs uppercase tracking-widest text-muted-foreground mt-1">Years Experience</p>
+            <div className="text-center flex-1">
+              <p className="text-3xl sm:text-4xl font-black text-primary">5+</p>
+              <p className="text-[10px] sm:text-xs uppercase tracking-widest text-muted-foreground mt-1">Years Exp</p>
             </div>
-            <div className="w-px bg-border" />
-            <div className="text-center">
-              <p className="text-4xl font-black text-primary">40%</p>
-              <p className="text-xs uppercase tracking-widest text-muted-foreground mt-1">Avg Dev Boost</p>
+            <div className="w-px bg-border shrink-0" />
+            <div className="text-center flex-1">
+              <p className="text-3xl sm:text-4xl font-black text-primary">40%</p>
+              <p className="text-[10px] sm:text-xs uppercase tracking-widest text-muted-foreground mt-1">Dev Boost</p>
             </div>
-            <div className="w-px bg-border" />
-            <div className="text-center">
-              <p className="text-4xl font-black text-primary">15+</p>
-              <p className="text-xs uppercase tracking-widest text-muted-foreground mt-1">Projects Delivered</p>
+            <div className="w-px bg-border shrink-0" />
+            <div className="text-center flex-1">
+              <p className="text-3xl sm:text-4xl font-black text-primary">15+</p>
+              <p className="text-[10px] sm:text-xs uppercase tracking-widest text-muted-foreground mt-1">Projects</p>
             </div>
           </motion.div>
         </div>
@@ -100,7 +98,7 @@ const Experience = () => {
                 </div>
 
                 {/* Content Card */}
-                <div className={`w-full md:w-5/12 ${index % 2 === 0 ? 'md:ml-auto' : 'md:mr-auto'}`}>
+                <div className={`w-full md:w-5/12 pl-14 md:pl-0 ${index % 2 === 0 ? 'md:ml-auto' : 'md:mr-auto'}`}>
                   <div className="group relative p-1 rounded-3xl bg-linear-to-br from-primary/10 to-transparent hover:from-primary/20 transition-all duration-500">
                     <div className="bg-card border border-border rounded-3xl p-8 md:p-10 transition-all hover:shadow-2xl">
                       

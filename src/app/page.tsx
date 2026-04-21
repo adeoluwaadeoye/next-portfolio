@@ -27,8 +27,6 @@ export default function Home() {
     <>
       {isLoading && <IntroLoader onComplete={() => setIsLoading(false)} />}
 
-      {/* Classy Grain Texture Overlay */}
-      <div className="fixed inset-0 z-99 pointer-events-none opacity-[0.03] contrast-125 brightness-100 bg-[url('https://grainy-gradients.vercel.app/noise.svg')]" />
 
       <main
         className={`min-h-screen bg-background transition-all duration-1000 ease-[cubic-bezier(0.23,1,0.32,1)] ${

@@ -66,8 +66,6 @@ const DOMAINS = [
 export default function SkillsSection() {
     return (
         <section className="relative bg-background py-24 overflow-hidden">
-            {/* Background grid */}
-            <div className="absolute inset-0 bg-[linear-gradient(to_right,#e5e5e5_1px,transparent_1px),linear-gradient(to_bottom,#e5e5e5_1px,transparent_1px)] dark:bg-[linear-gradient(to_right,#27272a_1px,transparent_1px),linear-gradient(to_bottom,#27272a_1px,transparent_1px)] bg-size-[40px_40px] opacity-30 dark:opacity-15 pointer-events-none" />
 
             <div className="max-w-7xl mx-auto px-6 relative z-10">
 

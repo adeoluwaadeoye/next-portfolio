@@ -142,17 +142,15 @@ export default function MobileMenu({ open, onClose }: Props) {
             transition={{ type: 'spring', damping: 25, stiffness: 200 }}
           >
             {/* HEADER */}
-            <div className="flex items-center justify-between p-6 pb-4">
-              <div className="flex flex-col gap-1">
-                <span className="font-heading text-2xl font-black tracking-tighter uppercase text-foreground">AA</span>
-                <div className="flex items-center gap-2">
-                  <span className="relative flex h-2 w-2">
-                    <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-green-500 opacity-75"></span>
-                    <span className="relative inline-flex h-2 w-2 rounded-full bg-green-500"></span>
-                  </span>
-                  <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-foreground/60">
-                    Available for projects
-                  </p>
+            <div className="flex items-center justify-between p-5 pb-3">
+              <div className="flex items-center gap-2.5">
+                <div className="w-9 h-9 rounded-xl bg-linear-to-br from-primary via-blue-500 to-violet-600 flex items-center justify-center shadow-md shadow-primary/30 shrink-0 relative">
+                  <span className="font-black text-white text-sm leading-none tracking-tight">AA</span>
+                  <span className="absolute -bottom-0.5 -right-0.5 w-2.5 h-2.5 bg-green-500 rounded-full border-2 border-background" />
+                </div>
+                <div className="flex flex-col leading-none gap-0.5">
+                  <span className="font-black text-sm tracking-tight bg-linear-to-r from-primary to-violet-500 bg-clip-text text-transparent">Adeoluwa</span>
+                  <span className="text-[10px] font-bold text-muted-foreground tracking-[0.15em] uppercase">Adeoye</span>
                 </div>
               </div>
 
@@ -166,7 +164,7 @@ export default function MobileMenu({ open, onClose }: Props) {
             </div>
 
             {/* THEME TOGGLE */}
-            <div className="mx-6 mb-8 flex items-center justify-between rounded-2xl bg-muted/50 p-4">
+            <div className="mx-5 mb-3 flex items-center justify-between rounded-2xl bg-muted/50 p-3">
               <div className="flex flex-col">
                 <span className="text-xs font-bold text-foreground">VISUAL</span>
                 <span className="text-[10px] uppercase tracking-wider text-muted-foreground">Switch Theme</span>
@@ -180,7 +178,7 @@ export default function MobileMenu({ open, onClose }: Props) {
               initial="hidden"
               animate="show"
               exit="exit"
-              className="grid flex-1 grid-cols-3 gap-3 overflow-y-auto px-6 pb-8"
+              className="grid flex-1 grid-cols-3 gap-2 overflow-y-auto px-5 pb-3"
             >
               {allLinks.map((item) => {
                 const isActive = !item.download && pathname === item.href
@@ -215,11 +213,11 @@ export default function MobileMenu({ open, onClose }: Props) {
             </motion.nav>
 
             {/* SOCIAL FOOTER */}
-            <div className="mt-auto border-t border-border bg-muted/20 p-8 pt-6">
-              <p className="mb-6 text-center text-[9px] font-black uppercase tracking-[0.4em] text-foreground/40">
+            <div className="mt-auto border-t border-border bg-muted/20 p-5 pt-3">
+              <p className="mb-3 text-center text-[9px] font-black uppercase tracking-[0.4em] text-foreground/40">
                 Find me on
               </p>
-              <div className="flex justify-center gap-8">
+              <div className="flex justify-center gap-5">
                 {socialLinks.map((item, i) => {
                   const style = getSocialStyle(item.label)
                   return (
@@ -231,15 +229,15 @@ export default function MobileMenu({ open, onClose }: Props) {
                       initial={{ opacity: 0, y: 10 }}
                       animate={{ opacity: 1, y: 0 }}
                       transition={{ delay: 0.4 + i * 0.05 }}
-                      whileHover={{ y: -5 }}
+                      whileHover={{ y: -4 }}
                       whileTap={{ scale: 0.9 }}
                       className="flex flex-col items-center gap-2"
                     >
                       <div
-                        className="flex h-12 w-12 items-center justify-center shadow-lg transition-shadow hover:shadow-primary/20"
+                        className="flex h-10 w-10 items-center justify-center shadow-lg transition-shadow hover:shadow-primary/20"
                         style={{ backgroundColor: style.bg, color: style.icon }}
                       >
-                        <SocialIcon name={item.label} className="text-xl" />
+                        <SocialIcon name={item.label} className="text-lg" />
                       </div>
                     </MotionLink>
                   )
