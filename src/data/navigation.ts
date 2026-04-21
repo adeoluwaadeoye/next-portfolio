@@ -5,26 +5,14 @@ export type NavItem = {
 }
 
 export const navigation: NavItem[] = [
-  {
-    label: 'Home',
-    href: '/',
-  },
-  {
-    label: 'About',
-    href: '/about',
-  },
-  {
-    label: 'Projects',
-    href: '/projects',
-  },
-  {
-    label: 'Experience',
-    href: '/experience',
-  },
-  {
-    label: 'Contact',
-    href: '/contact',
-  },
+  { label: 'Home', href: '/' },
+  { label: 'About', href: '/about' },
+  { label: 'Projects', href: '/projects' },
+  { label: 'Experience', href: '/experience' },
+  { label: 'Contact', href: '/contact' },
+  { label: 'Tools', href: '/tools' },
+  { label: 'Thoughts', href: '/thoughts' },
+  { label: 'Services', href: '/services' },
 ]
 
 export type SocialLink = {

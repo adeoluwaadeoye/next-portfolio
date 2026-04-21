@@ -3,30 +3,96 @@ import type { Metadata } from 'next';
 import { ThemeProvider } from '@/providers/ThemeProvider';
 import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
-
-import { Inter, Outfit, Geist, Figtree } from 'next/font/google';
+import { Figtree, Space_Grotesk } from 'next/font/google';
 import { cn } from '@/lib/utils';
+import ClientShell from '@/components/layout/ClientShell';
 
-const figtree = Figtree({subsets:['latin'],variable:'--font-sans'});
+const baseUrl = 'https://your-domain.com'; // Replace with your actual domain
 
-
-// BODY FONT: Inter is the gold standard for UI readability
-const inter = Inter({
+const figtreeBody = Figtree({
   subsets: ['latin'],
   variable: '--font-body',
   display: 'swap',
 });
 
-// HEADING FONT: Outfit offers a more geometric, modern "Architect" aesthetic
-const headingFont = Outfit({
+const headingFont = Space_Grotesk({
   subsets: ['latin'],
   variable: '--font-heading',
   display: 'swap',
 });
 
+// Integrated Metadata
 export const metadata: Metadata = {
-  title: 'Adeoluwa Adeoye — Senior Fullstack Engineer',
-  description: 'Building scalable, performant, and user-focused digital products.',
+  metadataBase: new URL(baseUrl),
+
+  title: {
+    default: 'Adeoluwa Adeoye — Senior Fullstack Engineer',
+    template: '%s | Adeoluwa Adeoye',
+  },
+
+  description:
+    'Senior Fullstack Engineer based in Nigeria, specializing in building scalable, high-performance web applications with modern technologies.',
+
+  keywords: [
+    'Adeoluwa Adeoye',
+    'Fullstack Developer Nigeria',
+    'Senior Frontend Engineer',
+    'Next.js Developer',
+    'React Developer',
+    'TypeScript Engineer',
+    'Web Performance',
+    'Scalable Systems',
+  ],
+
+  authors: [{ name: 'Adeoluwa Adeoye', url: baseUrl }],
+  creator: 'Adeoluwa Adeoye',
+
+  openGraph: {
+    title: 'Adeoluwa Adeoye — Senior Fullstack Engineer',
+    description: 'Building scalable, performant, and user-focused digital products.',
+    url: baseUrl,
+    siteName: 'Adeoluwa Portfolio',
+    images: [
+      {
+        url: `${baseUrl}/images/og-image.png`,
+        width: 1200,
+        height: 630,
+        alt: 'Adeoluwa Adeoye Portfolio Preview',
+      },
+    ],
+    locale: 'en_US',
+    type: 'website',
+  },
+
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Adeoluwa Adeoye — Senior Fullstack Engineer',
+    description: 'Building scalable, performant, and user-focused digital products.',
+    images: [`${baseUrl}/images/og-image.png`],
+    creator: '@AdeDadB', // Replace with your handle
+  },
+
+  icons: {
+    icon: '/assets/logo.png',
+    shortcut: '/assets/logo.png',
+    apple: '/assets/logo.png',
+  },
+
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      'max-video-preview': -1,
+      'max-image-preview': 'large',
+      'max-snippet': -1,
+    },
+  },
+
+  alternates: {
+    canonical: baseUrl,
+  },
 };
 
 export default function RootLayout({
@@ -38,20 +104,22 @@ export default function RootLayout({
     <html
       lang="en"
       suppressHydrationWarning
-      // Combining the variables and setting font-body as the default
+      data-scroll-behavior="smooth"
       className={cn(
-              inter.variable,
-              headingFont.variable,
-              "scroll-smooth"
-            , "font-sans", figtree.variable)}
+        figtreeBody.variable,
+        headingFont.variable,
+        'font-sans'
+      )}
     >
-      <body className="min-h-screen antialiased font-body bg-white dark:bg-slate-950 text-slate-900 dark:text-slate-200">
+      <body className="min-h-screen antialiased font-body">
         <ThemeProvider>
-          <Header />
-          <main className="flex flex-col min-h-[80vh]">
-            {children}
-          </main>
-          <Footer />
+          <ClientShell>
+            <Header />
+            <main className="flex flex-col min-h-[80vh]">
+              {children}
+            </main>
+            <Footer />
+          </ClientShell>
         </ThemeProvider>
       </body>
     </html>

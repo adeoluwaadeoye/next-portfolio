@@ -16,70 +16,70 @@ const socials = [
 
 export default function Sidebar() {
     return (
-        <Card className="w-full rounded-3xl border border-border bg-background/95 backdrop-blur-xl shadow-2xl overflow-hidden mx-auto lg:mx-0">
+        <Card className="w-full h-fit max-h-[calc(100vh-2rem)] overflow-y-auto rounded-2xl border border-border bg-background/95 backdrop-blur-xl shadow-xl mx-auto lg:mx-0 custom-scrollbar">
 
-            {/* HEADER */}
-            <CardHeader className="pt-8 pb-6 flex flex-col items-center text-center space-y-12 px-6">
-                <div className="relative w-full max-w-75 h-100 md:max-w-70 rounded-md aspect-4/5 overflow-hidden border border-border shadow-md mx-auto">
+            {/* HEADER - Reduced padding and space-y */}
+            <CardHeader className="pt-5 pb-3 flex flex-col items-center text-center space-y-3 px-4">
+                {/* Shrink image container from max-w-60 to max-w-48 */}
+                <div className="relative w-full max-w-48 aspect-4/5 rounded-xl overflow-hidden border border-border shadow-sm mx-auto">
                     <Image
-                        src="/assets/hero.jpg"
+                        src="/assets/hero2.jpg"
                         alt="Adeoluwa Adeoye"
                         fill
-                        sizes="100vw"
-                        className="object-cover"
+                        sizes="192px"
+                        className="object-cover object-top"
                         priority
                     />
                 </div>
 
                 <div>
-                    <h2 className="text-3xl font-semibold uppercase tracking-wide">Adeoluwa Adeoye</h2>
-                    <p className="text-muted-foreground mt-1 text-base">
-                        Fullstack Engineer • UI Systems Builder
+                    <h2 className="text-xl font-bold uppercase tracking-tight">Adeoluwa Adeoye</h2>
+                    <p className="text-muted-foreground text-xs font-medium">
+                        Fullstack Engineer • UI Systems
                     </p>
                 </div>
             </CardHeader>
 
-            <Separator />
+            <Separator className="opacity-40" />
 
-            {/* BIO */}
-            <CardContent className="px-6 py-8 md:px-8">
-                <p className="text-sm text-muted-foreground leading-relaxed text-center">
-                    I design and build scalable digital products with strong UI systems,
-                    performance focus, and clean architecture.
+            {/* BIO - Reduced vertical padding */}
+            <CardContent className="px-5 py-4">
+                <p className="text-[13px] text-muted-foreground leading-snug text-center">
+                    I build scalable digital products with strong UI systems and clean architecture.
                 </p>
 
-                {/* Social Icons */}
-                <div className="grid grid-cols-4 gap-4 mt-10">
+                {/* Social Icons - More compact grid */}
+                <div className="grid grid-cols-4 gap-2 mt-4">
                     {socials.map((social) => (
                         <Link
                             key={social.name}
                             href={social.href}
                             target={social.name !== 'email' ? '_blank' : undefined}
-                            className="flex items-center justify-center p-4 rounded-2xl border border-border hover:scale-110 hover:shadow-md transition-all duration-200"
-                            style={{ backgroundColor: `${social.color}15` }}
+                            className="flex items-center justify-center p-2 rounded-lg border border-border hover:bg-secondary transition-all"
+                            style={{ backgroundColor: `${social.color}08` }}
                         >
-                            <SocialIcon name={social.name} size={24} />
+                            <SocialIcon name={social.name} size={18} />
                         </Link>
                     ))}
                 </div>
             </CardContent>
 
-            <Separator />
+            <Separator className="opacity-40" />
 
-            {/* ACTIONS */}
-            <CardFooter className="p-6 md:p-8 flex flex-col gap-3">
-                <Button asChild className="w-full h-12 text-base font-medium rounded-2xl">
-                    <a href="/ADEOLUWA_CV.pdf" download="ADEOLUWA_CV.pdf">
-                        Download CV
-                    </a>
+            {/* ACTIONS - Narrower buttons and smaller text */}
+            <CardFooter className="p-4 flex flex-col gap-2">
+                <Button asChild className="w-full h-9 text-xs font-semibold rounded-lg">
+                    <Link href="/assets/ADE_RESUME.pdf" download="Adeoluwa_Adeoye_Resume.pdf">
+                        Download Resume
+                    </Link>
                 </Button>
 
                 <Button
                     variant="outline"
                     asChild
-                    className="w-full h-12 text-base rounded-2xl"
+                    className="w-full h-9 text-xs rounded-lg border-border hover:bg-secondary"
                 >
-                    <Link href="/contact">
+                    <Link href="/booking">
                         Book a Call
                     </Link>
                 </Button>

@@ -2,131 +2,193 @@
 
 import { useState } from 'react';
 import Image from 'next/image';
-import { ArrowUpRight } from 'lucide-react';
+import { motion } from 'framer-motion';
+import { FiArrowUpRight, FiMaximize2, FiGlobe, FiLayers, FiCpu, FiShield, FiBox } from 'react-icons/fi';
+import { Zap } from 'lucide-react';
+import { FaProjectDiagram } from "react-icons/fa";
+
+
 import { projects } from '@/data/projects';
 import ProjectModal from '@/components/projects/ProjectModal';
-import { TechIcon } from "@/components/icons/TechIcon";
-
-// Shadcn UI
-import { Card, CardContent } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import Link from 'next/link';
 
 type Project = (typeof projects)[number];
+
+const ACCENTS = ["text-blue-500", "text-emerald-500", "text-violet-500", "text-orange-500"];
+const DIVIDER_ICONS = [FiCpu, FiShield, FiBox];
 
 export default function Projects() {
   const [activeProject, setActiveProject] = useState<Project | null>(null);
 
   return (
-    <section id="projects" className="py-16 sm:py-32 bg-background">
-      <div className="max-w-7xl mx-auto px-6 lg:px-8">
+    <section id="projects" className="py-4 max-w-6xl mx-auto px-6 relative">
 
-        {/* 1. HEADER - Enhanced Spacing & Impact */}
-        <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-10 mb-8 sm:mb-12">
-          <div className="space-y-6 max-w-3xl">
-            <Badge variant="outline" className="px-5 py-2 uppercase tracking-[0.3em] text-[10px] font-black border-primary bg-primary/5 text-primary">
-              Selected Work
-            </Badge>
-            <h2 className="text-5xl sm:text-8xl font-black tracking-tighter text-foreground leading-[0.85] uppercase">
-              Built for impact,<br />
-              <span className="text-primary">engineered for scale.</span>
-            </h2>
-          </div>
-          <p className="text-muted-foreground text-lg sm:text-xl max-w-sm border-l-4 border-primary pl-6 py-2 font-medium leading-relaxed">
-            A curated selection of full-stack applications showcasing architecture and performance.
-          </p>
+      {/* 1. HEADER */}
+      <div className="mb-8 md:mb-16">
+        <div className="flex items-center gap-2 mb-2">
+          <FaProjectDiagram className="w-4 h-4 text-primary" />
+          <div className="h-0.5 w-8 bg-foreground" />
+          <span className="text-[10px] font-black uppercase tracking-[0.4em]">
+            Build_Archive
+          </span>
         </div>
 
-        {/* 2. PROJECTS GRID */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 lg:gap-8">
-          {projects.slice(0, 4).map((project, index) => {
-            const isLarge = index % 3 === 0;
-            return (
-              <Card
-                key={project.id}
-                onClick={() => setActiveProject(project)}
-                className={`group cursor-pointer overflow-hidden border-2 border-border bg-secondary/10  transition-all duration-500  shadow-none hover:shadow-2xl active:scale-[0.99] touch-manipulation ${isLarge ? 'md:col-span-2' : 'md:col-span-1'
-                  }`}
+        <h2 className="text-5xl md:text-7xl lg:text-8xl font-black tracking-tighter leading-none text-foreground">
+          Selected<br />
+          <span className="bg-linear-to-r from-primary via-violet-500 to-emerald-500 bg-clip-text text-transparent">
+            Projects.
+          </span>
+        </h2>
+      </div>
+
+      {/* 2. PROJECT STACK */}
+      <div className="space-y-4">
+        {projects.slice(0, 4).map((project, index) => {
+          const IconComponent = DIVIDER_ICONS[index % DIVIDER_ICONS.length];
+          const accentColor = ACCENTS[index % ACCENTS.length];
+
+          return (
+            <div key={project.id}>
+              <motion.div
+                initial={{ opacity: 0, y: 15 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                className="group relative"
               >
-                <CardContent className="p-0">
-                  {/* IMAGE SECTION - Added perspective for the tilt */}
-                  <div className="relative w-full aspect-16/10 sm:aspect-video overflow-hidden border-b-2 border-border group-hover:border-primary/20 transition-colors perspective-[1000px]">
+                {/* BORDER LIGHT */}
+                <div className="absolute inset-0 rounded-3xl border border-primary/0 group-hover:border-primary/40 transition-all duration-500 z-20 pointer-events-none" />
+
+                <div className="relative overflow-hidden rounded-3xl border border-foreground/8 bg-secondary/5 transition-all duration-500 group-hover:bg-secondary/10">
+
+                  {/* IMAGE VIEWPORT */}
+                  <div
+                    onClick={() => setActiveProject(project)}
+                    className="relative w-full aspect-video bg-black cursor-pointer overflow-hidden"
+                  >
                     <Image
                       src={project.image}
                       alt={project.title}
                       fill
-                      // Added: -rotate-2 and scale-110 on hover for the "Tilt + Zoom" effect
-                      className="object-cover transition-transform duration-1000 ease-out group-hover:scale-110 group-hover:rotate-2 group-hover:translate-y-2"
-                      sizes="(max-width: 768px) 100vw, (max-width: 1200px) 70vw, 1200px"
-                      priority={index === 0}
+                      sizes='100vw'
+                      priority
+                      className="object-cover transition-transform duration-[1.2s] group-hover:scale-105"
                     />
 
-                    {/* Overlay for Desktop */}
-                    <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity duration-500 hidden md:flex items-center justify-center backdrop-blur-sm">
-                      <div className="bg-white text-black  px-8 py-4 transform translate-y-4 group-hover:translate-y-0 transition-transform duration-500 font-black flex items-center gap-3 uppercase text-sm tracking-widest">
-                        View Project <ArrowUpRight className="w-5 h-5" />
-                      </div>
+                    {/* CURVED "DIPPED" OVERLAY 
+                        Radial gradient: Darker at corners (80% and 20% width), transparent in middle-top
+                    */}
+                    <div
+                      className="absolute inset-0 z-10 transition-opacity duration-700 pointer-events-none"
+                      style={{
+                        background: `linear-gradient(to top, var(--foreground) 0%, transparent 100%)`,
+                        opacity: 0.15, // Subtle base layer
+                        maskImage: `radial-gradient(55% 40% at 50% 100%, transparent 0%, black 100%)`,
+                        WebkitMaskImage: `radial-gradient(55% 40% at 50% 100%, transparent 0%, black 100%)`,
+                      }}
+                    />
+
+                    {/* Theme-Adaptive Corner Accents */}
+                    <div
+                      className="absolute inset-0 z-10 opacity-10 dark:opacity-20"
+                      style={{
+                        background: `
+      radial-gradient(circle at 0% 100%, var(--foreground) 0%, transparent 25%),
+      radial-gradient(circle at 100% 100%, var(--foreground) 0%, transparent 25%)
+    `
+                      }}
+                    />
+
+                    {/* SECONDARY ADAPTIVE HIGHLIGHT (Corner focus) */}
+                    <div className="absolute inset-0 bg-linear-to-tr from-black/40 via-transparent to-white/5 pointer-events-none" />
+
+                    <div className="absolute bottom-4 right-4 z-10">
+                      <motion.div
+                        whileHover={{ scale: 1.05 }}
+                        className="p-3 rounded-full bg-primary text-white shadow-lg"
+                      >
+                        <FiMaximize2 size={18} />
+                      </motion.div>
                     </div>
                   </div>
 
-                  {/* CONTENT SECTION */}
-                  <div className={`p-8 sm:p-12 ${!isLarge ? 'sm:p-8' : ''}`}>
-                    <div className={`flex flex-col gap-6 ${isLarge ? 'lg:flex-row lg:items-center lg:justify-between' : ''}`}>
-
-                      {/* Text Side - Title now wraps fully */}
-                      <div className="space-y-3 flex-1 min-w-0">
-                        <span className="text-[11px] font-black tracking-[0.25em] text-primary uppercase">
-                          {project.category}
-                        </span>
-                        {/* Removed 'truncate' and added 'whitespace-normal' */}
-                        <h3 className={`${isLarge ? 'text-4xl sm:text-6xl' : 'text-3xl sm:text-4xl'} font-black text-foreground uppercase tracking-tight leading-tight whitespace-normal`}>
-                          {project.title}
-                        </h3>
+                  {/* SEPARATOR BAR */}
+                  <div className="bg-foreground/3 border-y border-foreground/5 px-8 py-3 flex items-center justify-between">
+                    <div className="flex gap-6">
+                      <div className="flex items-center gap-2 opacity-60">
+                        <FiGlobe className={`w-3.5 h-3.5 ${accentColor}`} />
+                        <span className="text-[8px] font-black uppercase tracking-widest text-foreground">Global_Deploy</span>
                       </div>
+                      <div className="flex items-center gap-2 opacity-60">
+                        <FiLayers className="w-3.5 h-3.5 text-primary" />
+                        <span className="text-[8px] font-black uppercase tracking-widest text-foreground">Stack_Verified</span>
+                      </div>
+                    </div>
+                    <div className="text-[8px] font-black font-mono opacity-30 text-foreground">PROT_V.4.0</div>
+                  </div>
 
-                      {/* Stack Side */}
-                      <div className="flex flex-row flex-nowrap items-center gap-2 sm:gap-3 shrink-0">
-                        {project.stack.slice(0, 4).map((tech) => (
-                          <div
-                            key={tech}
-                            className="w-11 h-11 sm:w-14 sm:h-14 border-2 border-border bg-background flex items-center justify-center shadow-sm group-hover:border-primary/30 transition-all hover:scale-110 hover:shadow-md"
-                          >
-                            <TechIcon name={tech} className="w-6 h-6 sm:w-7 sm:h-7" />
-                          </div>
+                  {/* DESCRIPTION AREA */}
+                  <div className="px-8 py-6 flex flex-col md:flex-row items-center justify-between gap-6">
+                    <div className="flex flex-col gap-2">
+                      <div className="flex items-center gap-2">
+                        <Zap className={`w-3.5 h-3.5 fill-current ${accentColor}`} />
+                        <span className="font-mono text-[10px] font-black uppercase tracking-widest opacity-60">{project.category}</span>
+                      </div>
+                      <h3 className="text-2xl md:text-3xl font-black text-foreground uppercase tracking-tighter">
+                        {project.title}
+                      </h3>
+                      <div className="flex flex-wrap gap-1.5 mt-2">
+                        {['Architecture', 'High_Performance', 'Secure'].map((label) => (
+                          <span key={label} className="text-[7px] font-black uppercase border border-foreground/10 px-2 py-0.5 rounded opacity-40">
+                            {label}
+                          </span>
                         ))}
                       </div>
                     </div>
-                  </div>
-                </CardContent>
-              </Card>
-            );
-          })}
-        </div>
 
-        {/* 3. FOOTER - Massive Call to Action */}
-        <div className="mt-4 sm:mt-6 text-center">
-          <div className="h-px w-full bg-linear-to-r from-transparent via-border to-transparent mb-16" />
-          <div className="inline-block group">
-            <p className="text-muted-foreground text-xs font-black uppercase tracking-[0.3em] mb-6">Want to see the underlying logic?</p>
-            <Link
-              href="https://github.com/adeoluwaadeoye"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="group text-3xl sm:text-5xl font-black text-foreground hover:text-primary transition-all inline-flex items-center gap-4 uppercase tracking-tighter"
-            >
-              Explore the Codebases
-              <span className="bg-primary text-white p-4 rounded-full group-hover:rotate-12 group-hover:scale-110 transition-all shadow-xl shadow-primary/20">
-                <ArrowUpRight className="w-8 h-8 sm:w-10 sm:h-10" />
-              </span>
-            </Link>
-          </div>
-        </div>
+                    <button
+                      onClick={() => setActiveProject(project)}
+                      className="w-full md:w-auto flex items-center justify-center gap-3 bg-foreground text-background px-8 py-4 rounded-xl font-black text-[10px] uppercase tracking-[0.2em] transition-all hover:bg-primary hover:text-white"
+                    >
+                      Initialize <FiArrowUpRight size={14} />
+                    </button>
+                  </div>
+                </div>
+              </motion.div>
+
+              {/* PARALLEL LINE DIVIDER */}
+              {index !== projects.length - 1 && (
+                <div className="h-16 relative flex items-center justify-center w-full overflow-hidden">
+                  <div className="absolute inset-0 flex flex-col justify-center gap-1.5 px-4">
+                    <motion.div
+                      initial={{ scaleX: 0 }}
+                      whileInView={{ scaleX: 1 }}
+                      transition={{ duration: 1, ease: "circOut" }}
+                      className="h-px w-full bg-linear-to-r from-transparent via-foreground/20 to-transparent"
+                    />
+                    <motion.div
+                      initial={{ scaleX: 0 }}
+                      whileInView={{ scaleX: 1 }}
+                      transition={{ duration: 1, delay: 0.2, ease: "circOut" }}
+                      className="h-px w-full bg-linear-to-r from-transparent via-foreground/20 to-transparent"
+                    />
+                  </div>
+
+                  <div className="relative z-10 bg-background px-6 py-2">
+                    <motion.div
+                      animate={{ rotate: 360 }}
+                      transition={{ duration: 8, repeat: Infinity, ease: "linear" }}
+                      className="flex items-center justify-center p-2 rounded-full border border-foreground/10 bg-secondary/5"
+                    >
+                      <IconComponent size={14} className="text-primary" />
+                    </motion.div>
+                  </div>
+                </div>
+              )}
+            </div>
+          );
+        })}
       </div>
 
-      <ProjectModal
-        project={activeProject}
-        onClose={() => setActiveProject(null)}
-      />
+      <ProjectModal project={activeProject} onClose={() => setActiveProject(null)} />
     </section>
   );
 }

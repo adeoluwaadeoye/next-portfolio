@@ -70,8 +70,28 @@ export const projects: Project[] = [
       "Vercel",
     ],
     image: "/assets/project3.jpg",
+    liveUrl: "https://job-tracker-phi-plum.vercel.app/",
+    githubUrl: "https://github.com/adeoluwaadeoye/job-tracker",
+    category: "AI Productivity Tool",
+  },
+
+  {
+    id: 4,
+    title: "DevCollab",
+    description:
+      "A real-time collaborative workspace for developers — think Notion meets GitHub. Features live document co-editing, project boards, code snippet sharing, and team presence indicators. Built with Next.js, Socket.io, and MongoDB.",
+    stack: [
+      "Next.js",
+      "TypeScript",
+      "Tailwind CSS",
+      "Socket.io",
+      "MongoDB",
+      "Node.js",
+      "Vercel",
+    ],
+    image: "/assets/project4.jpg",
     liveUrl: "#",
     githubUrl: "#",
-    category: "AI Productivity Tool",
+    category: "Collaboration Tool",
   },
 ];

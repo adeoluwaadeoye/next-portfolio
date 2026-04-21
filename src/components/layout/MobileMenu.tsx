@@ -1,17 +1,22 @@
 'use client'
 
+import React, { useEffect } from 'react'
 import Link from 'next/link'
-import { useEffect } from 'react'
-import { motion, AnimatePresence } from 'framer-motion'
+import { usePathname } from 'next/navigation'
+import { motion, AnimatePresence, Variants } from 'framer-motion'
+
+const MotionLink = motion.create(Link)
 import {
   Home,
   LayoutGrid,
   Wrench,
   PenTool,
   PhoneCall,
-  Settings,
   User,
   Download,
+  Briefcase,
+  Mail,
+  X,
 } from 'lucide-react'
 
 import SocialIcon from '@/components/icons/SocialIcon'
@@ -31,231 +36,216 @@ type NavItem = {
   download?: boolean
 }
 
-/* NAV DATA */
-const mainLinks: NavItem[] = [
+const allLinks: NavItem[] = [
   { label: 'Home', href: '/', icon: Home },
-  { label: 'Projects', href: '/projects', icon: LayoutGrid },
   { label: 'About', href: '/about', icon: User },
+  { label: 'Projects', href: '/projects', icon: LayoutGrid },
+  { label: 'Services', href: '/services', icon: Wrench }, // Added Services
+  { label: 'Experience', href: '/experience', icon: Briefcase },
+  { label: 'Tools', href: '/tools', icon: PenTool }, // Swapped to PenTool for variety
+  { label: 'Thoughts', href: '/thoughts', icon: Mail }, 
+  { label: 'Contact', href: '/contact', icon: PhoneCall },
+  { label: 'Booking', href: '/booking', icon: Mail },
+  { label: 'Resume', href: '/assets/ADE_RESUME.pdf', icon: Download, download: true },
 ]
 
-const exploreLinks: NavItem[] = [
-  { label: 'Tools', href: '/tools', icon: Wrench },
-  { label: 'Thoughts', href: '/thoughts', icon: PenTool },
-  { label: 'Services', href: '/services', icon: Settings },
-]
-
-const actionLinks: NavItem[] = [
-  { label: 'Book a Call', href: '/booking', icon: PhoneCall },
-]
-
-/* CV ITEM (SPECIAL) */
-const cvItem: NavItem = {
-  label: 'Download CV',
-  href: '/assets/ADEOLUWA_CV.pdf',
-  icon: Download,
-  download: true,
+const containerVars: Variants = {
+  hidden: { opacity: 0 },
+  show: {
+    opacity: 1,
+    transition: { 
+      staggerChildren: 0.04, 
+      delayChildren: 0.1 
+    }
+  },
+  exit: { 
+    opacity: 0, 
+    transition: { 
+      staggerChildren: 0.02, 
+      staggerDirection: -1 
+    } 
+  }
 }
 
-/* DIVIDER */
-const Divider = () => (
-  <div className="my-2 h-px w-full bg-foreground/15 dark:bg-foreground/25" />
-)
+const itemVars: Variants = {
+  hidden: { opacity: 0, y: 12, scale: 0.9 },
+  show: { 
+    opacity: 1, 
+    y: 0, 
+    scale: 1, 
+    transition: { 
+      type: 'spring', 
+      stiffness: 260, 
+      damping: 20 
+    } 
+  },
+  exit: { 
+    opacity: 0, 
+    scale: 0.9, 
+    transition: { duration: 0.15 } 
+  }
+}
 
 export default function MobileMenu({ open, onClose }: Props) {
-
+  const pathname = usePathname()
+  // --- STRICT BODY SCROLL LOCK (Prevents all background movement) ---
   useEffect(() => {
-    const body = document.body
-    const html = document.documentElement
+    const html = document.documentElement;
+    const body = document.body;
 
     if (open) {
-      body.style.overflow = 'hidden'
-      body.style.position = 'fixed'
-      body.style.width = '100%'
-      html.style.overflow = 'hidden'
+      const scrollbarWidth = window.innerWidth - html.clientWidth;
+      
+      // Lock scrolling on both containers
+      html.style.overflow = 'hidden';
+      body.style.overflow = 'hidden';
+      body.style.touchAction = 'none'; // Prevents iOS touch-drag scrolling
+      
+      if (scrollbarWidth > 0) {
+        body.style.paddingRight = `${scrollbarWidth}px`;
+      }
     } else {
-      body.style.overflow = ''
-      body.style.position = ''
-      body.style.width = ''
-      html.style.overflow = ''
+      // Restore scrolling
+      html.style.overflow = '';
+      body.style.overflow = '';
+      body.style.touchAction = '';
+      body.style.paddingRight = '';
     }
 
     return () => {
-      body.style.overflow = ''
-      body.style.position = ''
-      body.style.width = ''
-      html.style.overflow = ''
+      html.style.overflow = '';
+      body.style.overflow = '';
+      body.style.touchAction = '';
+      body.style.paddingRight = '';
     }
   }, [open])
 
-  const renderLink = (item: NavItem, i: number, delay: number) => {
-    const Icon = item.icon
-
-    const baseClasses =
-      "flex items-center gap-3 py-2.5 px-2 rounded-lg " +
-      "text-muted-foreground hover:text-foreground hover:bg-muted/40 transition"
-
-    const content = (
-      <>
-        <Icon size={18} />
-        <span className="text-sm font-medium">{item.label}</span>
-      </>
-    )
-
-    return (
-      <motion.div
-        key={item.href}
-        initial={{ opacity: 0, x: 10 }}
-        animate={{ opacity: 1, x: 0 }}
-        transition={{ delay: delay + i * 0.04 }}
-      >
-        {item.download ? (
-          <a
-            href={item.href}
-            download="ADEOLUWA_CV.pdf"
-            className={baseClasses}
-            onClick={onClose}
-          >
-            {content}
-          </a>
-        ) : (
-          <Link href={item.href} onClick={onClose} className={baseClasses}>
-            {content}
-          </Link>
-        )}
-      </motion.div>
-    )
-  }
-
   return (
-    <AnimatePresence>
+    <AnimatePresence mode="wait">
       {open && (
         <>
-          {/* BACKDROP */}
+          {/* BACKDROP - Darker for higher contrast focus */}
           <motion.div
-            className="fixed inset-0 z-50 bg-black/50 backdrop-blur-sm"
+            className="fixed inset-0 z-60 bg-background/80 backdrop-blur-xl"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             onClick={onClose}
           />
 
-          {/* PANEL */}
+          {/* SIDE PANEL */}
           <motion.aside
-            className="
-              fixed right-0 top-0 z-50
-              h-full w-full sm:w-105
-              bg-background text-foreground
-              border-l border-border
-              flex flex-col
-            "
+            className="fixed right-0 top-0 z-70 flex h-full w-full flex-col bg-background shadow-2xl sm:max-w-sm"
             initial={{ x: '100%' }}
             animate={{ x: 0 }}
             exit={{ x: '100%' }}
-            transition={{ type: 'spring', stiffness: 140, damping: 20 }}
+            transition={{ type: 'spring', damping: 25, stiffness: 200 }}
           >
-
             {/* HEADER */}
-            <div className="flex items-center justify-between px-5 py-4 border-b border-border">
-              <div className="flex flex-col leading-tight">
-                <span className="font-heading text-xl font-semibold">
-                  AA
-                </span>
-                <p className="text-[10px] uppercase tracking-wider">
-                  Creative Engineer
-                </p>
-                <p className="text-[9px] font-bold text-green-600 tracking-widest leading-loose">
-                  Building the Future
-                </p>
+            <div className="flex items-center justify-between p-6 pb-4">
+              <div className="flex flex-col gap-1">
+                <span className="font-heading text-2xl font-black tracking-tighter uppercase text-foreground">AA</span>
+                <div className="flex items-center gap-2">
+                  <span className="relative flex h-2 w-2">
+                    <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-green-500 opacity-75"></span>
+                    <span className="relative inline-flex h-2 w-2 rounded-full bg-green-500"></span>
+                  </span>
+                  <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-foreground/60">
+                    Available for projects
+                  </p>
+                </div>
               </div>
 
               <button
                 onClick={onClose}
                 aria-label="Close menu"
-                className="
-                  w-12 h-12 text-lg font-bold flex items-center justify-center
-                  rounded-md border border-border
-                  hover:bg-muted/30 active:scale-95 transition
-                "
+                className="group flex h-10 w-10 items-center justify-center border border-border bg-destructive text-white transition-all active:scale-90"
               >
-                ✕
+                <X size={20} strokeWidth={2.5} className="transition-transform group-hover:rotate-90" />
               </button>
             </div>
 
-            {/* THEME */}
-            <div className="flex items-center justify-between px-5 py-1 border-b border-border">
-              <span className="text-xs text-muted-foreground">
-                Appearance
-              </span>
+            {/* THEME TOGGLE */}
+            <div className="mx-6 mb-8 flex items-center justify-between rounded-2xl bg-muted/50 p-4">
+              <div className="flex flex-col">
+                <span className="text-xs font-bold text-foreground">VISUAL</span>
+                <span className="text-[10px] uppercase tracking-wider text-muted-foreground">Switch Theme</span>
+              </div>
               <ThemeToggleSwitch />
             </div>
 
-            {/* NAV */}
-            <nav className="flex flex-col flex-1 px-5 py-3">
+            {/* NAVIGATION GRID - No background or borders on items */}
+            <motion.nav 
+              variants={containerVars}
+              initial="hidden"
+              animate="show"
+              exit="exit"
+              className="grid flex-1 grid-cols-3 gap-3 overflow-y-auto px-6 pb-8"
+            >
+              {allLinks.map((item) => {
+                const isActive = !item.download && pathname === item.href
+                const tileClass = `group flex aspect-square flex-col items-center justify-center gap-3 transition-all active:scale-95 ${
+                  isActive
+                    ? 'bg-primary/10 border border-primary/25'
+                    : 'hover:bg-muted/60'
+                }`
+                const iconClass = `transition-transform duration-200 group-hover:scale-110 ${
+                  isActive ? 'text-primary' : 'text-foreground group-hover:text-primary'
+                }`
+                const labelClass = `text-[11px] font-bold uppercase tracking-tight transition-colors ${
+                  isActive ? 'text-primary' : 'text-foreground/80 group-hover:text-foreground'
+                }`
 
-              <span className="text-[10px] uppercase text-muted-foreground">
-                Main
-              </span>
-              {mainLinks.map((item, i) => renderLink(item, i, 0.03))}
+                return (
+                  <motion.div key={item.href} variants={itemVars}>
+                    {item.download ? (
+                      <Link href={item.href} download="Adeoluwa_Adeoye_Resume.pdf" onClick={onClose} className={tileClass}>
+                        <div className={iconClass}><item.icon size={28} strokeWidth={2} /></div>
+                        <span className={labelClass}>{item.label}</span>
+                      </Link>
+                    ) : (
+                      <Link href={item.href} onClick={onClose} className={tileClass}>
+                        <div className={iconClass}><item.icon size={28} strokeWidth={2} /></div>
+                        <span className={labelClass}>{item.label}</span>
+                      </Link>
+                    )}
+                  </motion.div>
+                )
+              })}
+            </motion.nav>
 
-              <Divider />
-
-              <span className="text-[10px] uppercase text-muted-foreground">
-                Explore
-              </span>
-              {exploreLinks.map((item, i) => renderLink(item, i, 0.15))}
-
-              <Divider />
-
-              <span className="text-[10px] uppercase text-muted-foreground">
-                Action
-              </span>
-              {actionLinks.map((item, i) => renderLink(item, i, 0.25))}
-
-              {/* CV DOWNLOAD (NEW) */}
-              <Divider />
-              <span className="text-[10px] uppercase text-muted-foreground">
-                Resume
-              </span>
-              {renderLink(cvItem, 0, 0.3)}
-
-            </nav>
-
-            {/* SOCIAL */}
-            <div className="border-t border-border py-4 px-5">
-              <div className="flex justify-center gap-5">
+            {/* SOCIAL FOOTER */}
+            <div className="mt-auto border-t border-border bg-muted/20 p-8 pt-6">
+              <p className="mb-6 text-center text-[9px] font-black uppercase tracking-[0.4em] text-foreground/40">
+                Find me on
+              </p>
+              <div className="flex justify-center gap-8">
                 {socialLinks.map((item, i) => {
                   const style = getSocialStyle(item.label)
-
                   return (
-                    <motion.a
+                    <MotionLink
                       key={item.href}
                       href={item.href}
                       target="_blank"
                       rel="noopener noreferrer"
-                      initial={{ opacity: 0, y: 8 }}
+                      initial={{ opacity: 0, y: 10 }}
                       animate={{ opacity: 1, y: 0 }}
-                      transition={{ delay: 0.3 + i * 0.04 }}
-                      className="flex flex-col items-center gap-1"
+                      transition={{ delay: 0.4 + i * 0.05 }}
+                      whileHover={{ y: -5 }}
+                      whileTap={{ scale: 0.9 }}
+                      className="flex flex-col items-center gap-2"
                     >
-                      <span
-                        className="w-9 h-9 rounded-full flex items-center justify-center"
-                        style={{
-                          backgroundColor: style.bg,
-                          color: style.icon,
-                        }}
+                      <div
+                        className="flex h-12 w-12 items-center justify-center shadow-lg transition-shadow hover:shadow-primary/20"
+                        style={{ backgroundColor: style.bg, color: style.icon }}
                       >
-                        <SocialIcon name={item.label} className="text-[16px]" />
-                      </span>
-
-                      <span className="text-[10px] text-muted-foreground">
-                        {item.label}
-                      </span>
-                    </motion.a>
+                        <SocialIcon name={item.label} className="text-xl" />
+                      </div>
+                    </MotionLink>
                   )
                 })}
               </div>
             </div>
-
           </motion.aside>
         </>
       )}
