@@ -40,19 +40,13 @@ const SERVICES = [
 export default function BookingPage() {
     const router = useRouter()
 
-    const [date, setDate] = useState<Date | undefined>(undefined)
-    const [today, setToday] = useState<Date | undefined>(undefined)
+    const [date, setDate] = useState<Date | undefined>(() => new Date())
+    const today = new Date()
     const [selectedTime, setSelectedTime] = useState<string>("")
     const [selectedService, setSelectedService] = useState<string>("")
     const [isSubmitting, setIsSubmitting] = useState(false)
     const [isConfirmed, setIsConfirmed] = useState(false)
     const [step, setStep] = useState(1)
-
-    useEffect(() => {
-        const now = new Date()
-        setToday(now)
-        setDate(now)
-    }, [])
 
     useEffect(() => {
         if (isConfirmed) {

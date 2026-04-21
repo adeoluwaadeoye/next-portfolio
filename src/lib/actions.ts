@@ -26,32 +26,21 @@ export async function sendBookingEmail(formData: FormData): Promise<BookingResul
   }
 
   try {
-    // ── ADMIN NOTIFICATION ───────────────────────────────────────────
     await resend.emails.send({
       from: 'Portfolio Bookings <onboarding@resend.dev>',
       to: ['adeoluadeoye7@gmail.com'],
-      subject: `🗓 New Session Request — ${name} · ${service}`,
+      replyTo: email,
+      subject: `New Session Request — ${name} · ${service}`,
       html: adminEmailHtml({ name, email, date, time, service, message }),
     })
 
-    // ── CLIENT CONFIRMATION ──────────────────────────────────────────
-    const { error } = await resend.emails.send({
-      from: 'Adeolu Adeoye <onboarding@resend.dev>',
-      to: [email],
-      subject: `✅ Booking Confirmed — ${service} on ${date}`,
-      html: clientEmailHtml({ name, date, time, service }),
-    })
-
-    if (error) return { success: false, error: error.message }
     return { success: true }
   } catch (err) {
-    const message = err instanceof Error ? err.message : 'Unknown server error'
-    console.error('[sendBookingEmail]', message)
-    return { success: false, error: message }
+    const msg = err instanceof Error ? err.message : 'Unknown server error'
+    console.error('[sendBookingEmail]', msg)
+    return { success: false, error: msg }
   }
 }
-
-/* ─── Email Templates ─────────────────────────────────────────────────────── */
 
 function adminEmailHtml({
   name, email, date, time, service, message,
@@ -59,170 +48,119 @@ function adminEmailHtml({
   name: string; email: string; date: string
   time: string; service: string; message: string
 }) {
-  const rows = [
-    ['Client',   name],
-    ['Email',    email],
-    ['Service',  service],
-    ['Date',     date],
-    ['Time',     time],
-    ...(message ? [['Notes', message]] : []),
+  const details = [
+    { label: 'Client Name', value: name, icon: '👤' },
+    { label: 'Email',       value: email, icon: '📧' },
+    { label: 'Service',     value: service, icon: '⚡' },
+    { label: 'Date',        value: date, icon: '📅' },
+    { label: 'Time (GMT+1)',value: time, icon: '🕐' },
+    ...(message ? [{ label: 'Notes', value: message, icon: '💬' }] : []),
   ]
 
   return `<!DOCTYPE html>
 <html lang="en">
-<head><meta charset="UTF-8" /><meta name="viewport" content="width=device-width,initial-scale=1" /></head>
-<body style="margin:0;padding:0;background:#0f172a;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;">
-  <table width="100%" cellpadding="0" cellspacing="0" role="presentation" style="padding:48px 16px;">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>New Booking — ${name}</title>
+</head>
+<body style="margin:0;padding:0;background:#060a14;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;">
+  <table width="100%" cellpadding="0" cellspacing="0" role="presentation" style="padding:40px 16px;">
     <tr><td align="center">
-      <table width="560" cellpadding="0" cellspacing="0" role="presentation" style="max-width:560px;width:100%;border-radius:20px;overflow:hidden;border:1px solid #1e293b;background:#1e293b;">
+      <table width="580" cellpadding="0" cellspacing="0" role="presentation" style="max-width:580px;width:100%;">
 
-        <!-- Header -->
+        <!-- Logo bar -->
         <tr>
-          <td style="background:linear-gradient(135deg,#3b82f6 0%,#6366f1 100%);padding:36px 40px;">
-            <p style="margin:0 0 4px 0;font-size:11px;font-weight:700;letter-spacing:0.15em;color:rgba(255,255,255,0.7);text-transform:uppercase;">Adeolu Adeoye · Portfolio</p>
-            <h1 style="margin:0;font-size:24px;font-weight:800;color:#ffffff;line-height:1.2;">New Session Request</h1>
+          <td style="padding-bottom:28px;text-align:center;">
+            <span style="font-size:12px;font-weight:700;letter-spacing:0.2em;color:#475569;text-transform:uppercase;">
+              Adeoluwa Adeoye · Portfolio
+            </span>
           </td>
         </tr>
 
-        <!-- Body -->
+        <!-- Card -->
         <tr>
-          <td style="padding:32px 40px;">
-            <p style="margin:0 0 24px 0;font-size:14px;color:#94a3b8;line-height:1.6;">
-              A new booking has been submitted through your portfolio. Review the details below and confirm the session.
-            </p>
+          <td style="background:#0f172a;border-radius:24px;overflow:hidden;border:1px solid #1e293b;">
 
-            <!-- Details table -->
-            <table width="100%" cellpadding="0" cellspacing="0" role="presentation" style="border:1px solid #334155;border-radius:12px;overflow:hidden;">
-              ${rows.map(([label, value], i) => `
-              <tr style="background:${i % 2 === 0 ? '#0f172a' : '#1a2744'}">
-                <td style="padding:14px 20px;font-size:11px;font-weight:700;letter-spacing:0.08em;color:#64748b;text-transform:uppercase;white-space:nowrap;width:80px;">${label}</td>
-                <td style="padding:14px 20px;font-size:14px;font-weight:600;color:#e2e8f0;">${value}</td>
-              </tr>`).join('')}
+            <!-- Hero header -->
+            <table width="100%" cellpadding="0" cellspacing="0" role="presentation">
+              <tr>
+                <td style="background:linear-gradient(135deg,#1d4ed8 0%,#4f46e5 50%,#7c3aed 100%);padding:40px 44px 36px;">
+                  <table cellpadding="0" cellspacing="0" role="presentation">
+                    <tr>
+                      <td style="background:rgba(255,255,255,0.15);border-radius:14px;padding:10px 14px;margin-bottom:20px;">
+                        <span style="font-size:11px;font-weight:800;letter-spacing:0.18em;color:rgba(255,255,255,0.9);text-transform:uppercase;">
+                          🗓&nbsp;&nbsp;New Booking Request
+                        </span>
+                      </td>
+                    </tr>
+                  </table>
+                  <h1 style="margin:16px 0 6px;font-size:28px;font-weight:800;color:#ffffff;line-height:1.15;letter-spacing:-0.02em;">
+                    ${name} wants to<br/>book a session
+                  </h1>
+                  <p style="margin:0;font-size:15px;color:rgba(255,255,255,0.7);line-height:1.5;">
+                    Submitted via your portfolio contact form
+                  </p>
+                </td>
+              </tr>
+            </table>
+
+            <!-- Details -->
+            <table width="100%" cellpadding="0" cellspacing="0" role="presentation">
+              <tr>
+                <td style="padding:36px 44px 0;">
+                  <p style="margin:0 0 20px;font-size:11px;font-weight:700;letter-spacing:0.15em;color:#475569;text-transform:uppercase;">
+                    Booking Details
+                  </p>
+                  <table width="100%" cellpadding="0" cellspacing="0" role="presentation" style="border:1px solid #1e293b;border-radius:16px;overflow:hidden;">
+                    ${details.map(({ label, value, icon }, i) => `
+                    <tr style="background:${i % 2 === 0 ? '#0a0f1e' : '#0f172a'};">
+                      <td style="padding:16px 20px;width:44px;font-size:18px;vertical-align:top;">${icon}</td>
+                      <td style="padding:16px 0;width:130px;vertical-align:top;">
+                        <span style="font-size:11px;font-weight:700;letter-spacing:0.1em;color:#475569;text-transform:uppercase;">${label}</span>
+                      </td>
+                      <td style="padding:16px 20px 16px 8px;vertical-align:top;">
+                        <span style="font-size:14px;font-weight:600;color:#e2e8f0;line-height:1.5;">${value}</span>
+                      </td>
+                    </tr>`).join('')}
+                  </table>
+                </td>
+              </tr>
             </table>
 
             <!-- CTA -->
-            <table width="100%" cellpadding="0" cellspacing="0" role="presentation" style="margin-top:28px;">
+            <table width="100%" cellpadding="0" cellspacing="0" role="presentation">
               <tr>
-                <td>
-                  <a href="https://calendar.google.com" style="display:inline-block;background:#3b82f6;color:#ffffff;font-size:13px;font-weight:700;padding:14px 28px;border-radius:10px;text-decoration:none;letter-spacing:0.03em;">
-                    Open Calendar →
-                  </a>
-                </td>
-              </tr>
-            </table>
-          </td>
-        </tr>
-
-        <!-- Footer -->
-        <tr>
-          <td style="padding:20px 40px;border-top:1px solid #1e293b;">
-            <p style="margin:0;font-size:11px;color:#334155;text-align:center;">
-              Sent automatically from adeoluwaadeoye.dev · Do not reply to this email
-            </p>
-          </td>
-        </tr>
-
-      </table>
-    </td></tr>
-  </table>
-</body>
-</html>`
-}
-
-function clientEmailHtml({
-  name, date, time, service,
-}: {
-  name: string; date: string; time: string; service: string
-}) {
-  const features = [
-    '60-minute focused strategy session',
-    'Personalised technical roadmap',
-    'Architecture or code review notes',
-    'Follow-up resources & next steps',
-  ]
-
-  return `<!DOCTYPE html>
-<html lang="en">
-<head><meta charset="UTF-8" /><meta name="viewport" content="width=device-width,initial-scale=1" /></head>
-<body style="margin:0;padding:0;background:#f8fafc;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;">
-  <table width="100%" cellpadding="0" cellspacing="0" role="presentation" style="padding:48px 16px;">
-    <tr><td align="center">
-      <table width="560" cellpadding="0" cellspacing="0" role="presentation" style="max-width:560px;width:100%;border-radius:20px;overflow:hidden;border:1px solid #e2e8f0;background:#ffffff;">
-
-        <!-- Header -->
-        <tr>
-          <td style="background:linear-gradient(135deg,#3b82f6 0%,#6366f1 100%);padding:40px;text-align:center;">
-            <div style="display:inline-flex;align-items:center;justify-content:center;width:56px;height:56px;background:rgba(255,255,255,0.2);border-radius:16px;margin-bottom:16px;">
-              <span style="font-size:28px;">✅</span>
-            </div>
-            <h1 style="margin:0 0 6px 0;font-size:26px;font-weight:800;color:#ffffff;">Booking Confirmed!</h1>
-            <p style="margin:0;font-size:14px;color:rgba(255,255,255,0.8);">Your session has been secured, ${name}.</p>
-          </td>
-        </tr>
-
-        <!-- Session card -->
-        <tr>
-          <td style="padding:32px 40px 0;">
-            <table width="100%" cellpadding="0" cellspacing="0" role="presentation" style="background:#f0f7ff;border:1px solid #bfdbfe;border-radius:14px;overflow:hidden;">
-              <tr>
-                <td style="padding:20px 24px;border-bottom:1px solid #bfdbfe;">
-                  <p style="margin:0 0 2px 0;font-size:10px;font-weight:700;letter-spacing:0.12em;color:#6b7280;text-transform:uppercase;">Service</p>
-                  <p style="margin:0;font-size:15px;font-weight:700;color:#1e3a8a;">${service}</p>
-                </td>
-              </tr>
-              <tr>
-                <td style="padding:20px 24px;">
-                  <table width="100%" cellpadding="0" cellspacing="0" role="presentation">
+                <td style="padding:28px 44px 40px;">
+                  <table cellpadding="0" cellspacing="0" role="presentation">
                     <tr>
-                      <td style="width:50%;padding-right:12px;">
-                        <p style="margin:0 0 2px 0;font-size:10px;font-weight:700;letter-spacing:0.12em;color:#6b7280;text-transform:uppercase;">Date</p>
-                        <p style="margin:0;font-size:15px;font-weight:700;color:#1e40af;">${date}</p>
+                      <td style="border-radius:12px;background:linear-gradient(135deg,#1d4ed8,#4f46e5);">
+                        <a href="https://calendar.google.com" style="display:inline-block;padding:14px 28px;font-size:13px;font-weight:700;color:#ffffff;text-decoration:none;letter-spacing:0.04em;">
+                          Open Google Calendar &rarr;
+                        </a>
                       </td>
-                      <td style="width:50%;padding-left:12px;border-left:1px solid #bfdbfe;">
-                        <p style="margin:0 0 2px 0;font-size:10px;font-weight:700;letter-spacing:0.12em;color:#6b7280;text-transform:uppercase;">Time</p>
-                        <p style="margin:0;font-size:15px;font-weight:700;color:#1e40af;">${time}</p>
+                      <td style="padding-left:12px;">
+                        <a href="mailto:${email}" style="display:inline-block;padding:14px 24px;font-size:13px;font-weight:700;color:#94a3b8;text-decoration:none;border:1px solid #1e293b;border-radius:12px;letter-spacing:0.04em;">
+                          Reply to Client
+                        </a>
                       </td>
                     </tr>
                   </table>
                 </td>
               </tr>
             </table>
-          </td>
-        </tr>
 
-        <!-- What to expect -->
-        <tr>
-          <td style="padding:28px 40px 0;">
-            <p style="margin:0 0 16px 0;font-size:12px;font-weight:700;letter-spacing:0.1em;color:#6b7280;text-transform:uppercase;">What&apos;s included</p>
-            ${features.map(f => `
-            <table width="100%" cellpadding="0" cellspacing="0" role="presentation" style="margin-bottom:10px;">
+            <!-- Footer -->
+            <table width="100%" cellpadding="0" cellspacing="0" role="presentation">
               <tr>
-                <td style="width:20px;vertical-align:top;padding-top:1px;">
-                  <span style="font-size:14px;">✓</span>
+                <td style="padding:20px 44px;border-top:1px solid #1e293b;">
+                  <p style="margin:0;font-size:11px;color:#334155;text-align:center;line-height:1.6;">
+                    Sent automatically · adeoluwadeoye.vercel.app · Do not reply to this email
+                  </p>
                 </td>
-                <td style="font-size:14px;color:#374151;padding-left:10px;">${f}</td>
               </tr>
-            </table>`).join('')}
-          </td>
-        </tr>
+            </table>
 
-        <!-- Body text -->
-        <tr>
-          <td style="padding:24px 40px;">
-            <p style="margin:0;font-size:14px;color:#6b7280;line-height:1.7;">
-              A calendar invite will be sent to this email address shortly. If you need to reschedule or have any questions,
-              reply to this email and I will get back to you promptly.
-            </p>
-          </td>
-        </tr>
-
-        <!-- Footer -->
-        <tr>
-          <td style="padding:20px 40px;background:#f8fafc;border-top:1px solid #e2e8f0;">
-            <p style="margin:0;font-size:12px;color:#9ca3af;text-align:center;line-height:1.6;">
-              <strong style="color:#374151;">Adeolu Adeoye</strong> · Full-Stack Engineer<br />
-              <a href="https://adeoluwaadeoye.dev" style="color:#3b82f6;text-decoration:none;">adeoluwaadeoye.dev</a>
-            </p>
           </td>
         </tr>
 

@@ -7,7 +7,7 @@ import { Figtree, Space_Grotesk } from 'next/font/google';
 import { cn } from '@/lib/utils';
 import ClientShell from '@/components/layout/ClientShell';
 
-const baseUrl = 'https://your-domain.com'; // Replace with your actual domain
+const baseUrl = 'https://adeoluwadeoye.vercel.app';
 
 const figtreeBody = Figtree({
   subsets: ['latin'],
@@ -54,7 +54,7 @@ export const metadata: Metadata = {
     siteName: 'Adeoluwa Portfolio',
     images: [
       {
-        url: `${baseUrl}/images/og-image.png`,
+        url: `${baseUrl}/bg.jpg`,
         width: 1200,
         height: 630,
         alt: 'Adeoluwa Adeoye Portfolio Preview',
@@ -68,8 +68,8 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     title: 'Adeoluwa Adeoye — Senior Fullstack Engineer',
     description: 'Building scalable, performant, and user-focused digital products.',
-    images: [`${baseUrl}/images/og-image.png`],
-    creator: '@AdeDadB', // Replace with your handle
+    images: [`${baseUrl}/bg.jpg`],
+    creator: '@AdeDadB',
   },
 
   icons: {

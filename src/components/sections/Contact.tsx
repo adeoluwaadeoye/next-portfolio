@@ -15,7 +15,7 @@ import { Label } from '@/components/ui/label';
 import { sendEmail } from '@/lib/sendEmail';
 
 export default function ContactSection() {
-  const [status, setStatus] = useState<'idle' | 'sending' | 'success'>('idle');
+  const [status, setStatus] = useState<'idle' | 'sending' | 'success' | 'error'>('idle');
   const [charCount, setCharCount] = useState(0);
   const [localTime, setLocalTime] = useState('');
 
@@ -42,7 +42,8 @@ export default function ContactSection() {
       setCharCount(0);
       setTimeout(() => setStatus('idle'), 4500);
     } else {
-      setStatus('idle');
+      setStatus('error');
+      setTimeout(() => setStatus('idle'), 5000);
     }
   }
 
@@ -171,10 +172,10 @@ export default function ContactSection() {
                 </div>
 
                 <Button
-                  disabled={status !== 'idle'}
+                  disabled={status === 'sending' || status === 'success'}
                   className="w-full h-16 rounded-2xl font-black uppercase tracking-widest text-sm bg-linear-to-r from-primary to-violet-600 hover:brightness-110"
                 >
-                  {status === 'idle' && <>Send Message <FiSend className="ml-3" /></>}
+                  {(status === 'idle' || status === 'error') && <>Send Message <FiSend className="ml-3" /></>}
                   {status === 'sending' && <FiLoader className="animate-spin" />}
                   {status === 'success' && 'Message Sent Successfully'}
                 </Button>
@@ -188,6 +189,15 @@ export default function ContactSection() {
                     className="text-center text-emerald-500 text-sm font-medium mt-6"
                   >
                     Thank you! I&apos;ll get back to you soon.
+                  </motion.p>
+                )}
+                {status === 'error' && (
+                  <motion.p
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    className="text-center text-red-500 text-sm font-medium mt-6"
+                  >
+                    Something went wrong. Please try again or email me directly.
                   </motion.p>
                 )}
               </AnimatePresence>
