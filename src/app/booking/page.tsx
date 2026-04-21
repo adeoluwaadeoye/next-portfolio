@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import { useRouter } from 'next/navigation'
 import { DayPicker } from 'react-day-picker'
 import { format } from 'date-fns'
@@ -48,13 +48,6 @@ export default function BookingPage() {
     const [isConfirmed, setIsConfirmed] = useState(false)
     const [step, setStep] = useState(1)
 
-    useEffect(() => {
-        if (isConfirmed) {
-            const timer = setTimeout(() => router.push('/'), 5000)
-            return () => clearTimeout(timer)
-        }
-    }, [isConfirmed, router])
-
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault()
         if (!date || !selectedTime || !selectedService) return
@@ -96,19 +89,15 @@ export default function BookingPage() {
                     </div>
 
                     <div className="text-sm text-muted-foreground">
-                        A confirmation email has been sent to your inbox.
+                        I&apos;ll be in touch shortly to confirm your session details.
                     </div>
 
-                    <div className="h-1.5 w-full bg-secondary rounded-full overflow-hidden">
-                        <motion.div
-                            initial={{ width: 0 }}
-                            animate={{ width: "100%" }}
-                            transition={{ duration: 5 }}
-                            className="h-full bg-primary"
-                        />
-                    </div>
-
-                    <p className="text-xs text-muted-foreground">Redirecting to home in 5 seconds...</p>
+                    <button
+                        onClick={() => router.push('/')}
+                        className="w-full py-3 rounded-2xl bg-primary text-primary-foreground font-bold text-sm hover:opacity-90 transition-opacity"
+                    >
+                        Back to Portfolio
+                    </button>
                 </motion.div>
             </div>
         )

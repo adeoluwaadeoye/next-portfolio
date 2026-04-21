@@ -159,7 +159,7 @@ export default function AboutPage() {
               <motion.div
                 className="flex gap-6 whitespace-nowrap"
                 animate={{ x: ["0%", "-50%"] }}
-                transition={{ duration: 35, repeat: Infinity, ease: "linear" }}
+                transition={{ duration: 15, repeat: Infinity, ease: "linear" }}
               >
                 {[...techStack, ...techStack].map((tech, idx) => (
                   <div

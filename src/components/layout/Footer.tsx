@@ -125,7 +125,7 @@ export default function Footer() {
               <Link
                 href="/assets/ADE_RESUME.pdf"
                 download="Adeoluwa_Adeoye_Resume.pdf"
-                className="group inline-flex items-center justify-between gap-3 px-4 sm:px-5 py-3.5 sm:py-4 border border-border/60 hover:border-primary/30 hover:bg-muted/30 transition-all duration-300"
+                className="group inline-flex items-center justify-between gap-3 px-4 sm:px-5 py-3.5 sm:py-4 border border-border bg-secondary/40 dark:bg-secondary/60 hover:border-primary/50 hover:bg-muted/50 transition-all duration-300"
               >
                 <div>
                   <p className="text-sm font-bold text-foreground">Download Resume</p>
