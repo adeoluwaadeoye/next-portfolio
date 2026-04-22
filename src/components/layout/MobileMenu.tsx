@@ -135,14 +135,14 @@ export default function MobileMenu({ open, onClose }: Props) {
 
           {/* SIDE PANEL */}
           <motion.aside
-            className="fixed right-0 top-0 z-70 flex h-full w-full flex-col bg-background shadow-2xl sm:max-w-sm"
+            className="fixed right-0 top-0 z-70 flex h-full w-full flex-col bg-background shadow-2xl sm:max-w-sm landscape-sm:max-w-none landscape-sm:flex-row"
             initial={{ x: '100%' }}
             animate={{ x: 0 }}
             exit={{ x: '100%' }}
             transition={{ type: 'spring', damping: 25, stiffness: 200 }}
           >
             {/* HEADER */}
-            <div className="flex items-center justify-between p-5 pb-3">
+            <div className="flex items-center justify-between p-5 pb-3 landscape-sm:flex-col landscape-sm:justify-start landscape-sm:w-44 landscape-sm:shrink-0 landscape-sm:p-3 landscape-sm:gap-3 landscape-sm:border-r landscape-sm:border-border">
               <div className="flex items-center gap-2.5">
                 <div className="w-9 h-9 rounded-xl bg-linear-to-br from-primary via-blue-500 to-violet-600 flex items-center justify-center shadow-md shadow-primary/30 shrink-0 relative">
                   <span className="font-black text-white text-sm leading-none tracking-tight">AA</span>
@@ -164,7 +164,7 @@ export default function MobileMenu({ open, onClose }: Props) {
             </div>
 
             {/* THEME TOGGLE */}
-            <div className="mx-5 mb-3 flex items-center justify-between rounded-2xl bg-muted/50 p-3">
+            <div className="mx-5 mb-3 flex items-center justify-between rounded-2xl bg-muted/50 p-3 landscape-sm:mx-0 landscape-sm:mb-0 landscape-sm:flex-col landscape-sm:gap-1 landscape-sm:p-2 landscape-sm:rounded-xl">
               <div className="flex flex-col">
                 <span className="text-xs font-bold text-foreground">VISUAL</span>
                 <span className="text-[10px] uppercase tracking-wider text-muted-foreground">Switch Theme</span>
@@ -173,16 +173,16 @@ export default function MobileMenu({ open, onClose }: Props) {
             </div>
 
             {/* NAVIGATION GRID - No background or borders on items */}
-            <motion.nav 
+            <motion.nav
               variants={containerVars}
               initial="hidden"
               animate="show"
               exit="exit"
-              className="grid flex-1 grid-cols-3 gap-2 overflow-y-auto px-5 pb-3"
+              className="grid flex-1 grid-cols-3 landscape-sm:grid-cols-5 gap-2 overflow-y-auto px-5 pb-3 landscape-sm:px-3 landscape-sm:py-3"
             >
               {allLinks.map((item) => {
                 const isActive = !item.download && pathname === item.href
-                const tileClass = `group flex aspect-square flex-col items-center justify-center gap-3 transition-all active:scale-95 ${
+                const tileClass = `group flex aspect-square landscape-sm:aspect-auto landscape-sm:py-3 flex-col items-center justify-center gap-3 landscape-sm:gap-1.5 transition-all active:scale-95 ${
                   isActive
                     ? 'bg-primary/10 border border-primary/25'
                     : 'hover:bg-muted/60'
@@ -213,7 +213,7 @@ export default function MobileMenu({ open, onClose }: Props) {
             </motion.nav>
 
             {/* SOCIAL FOOTER */}
-            <div className="mt-auto border-t border-border bg-muted/20 p-5 pt-3">
+            <div className="mt-auto border-t border-border bg-muted/20 p-5 pt-3 landscape-sm:hidden">
               <p className="mb-3 text-center text-[9px] font-black uppercase tracking-[0.4em] text-foreground/40">
                 Find me on
               </p>

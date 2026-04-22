@@ -15,7 +15,7 @@ import { Separator } from '@/components/ui/separator';
 
 export default function Hero() {
   return (
-    <section className="relative w-full min-h-screen flex flex-col justify-center py-4 md:py-8 overflow-hidden bg-background">
+    <section className="hero-section relative w-full min-h-svh flex flex-col justify-center py-4 md:py-8 overflow-hidden bg-background">
       
 
       <div className="relative z-10 max-w-7xl mx-auto px-6 w-full">

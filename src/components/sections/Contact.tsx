@@ -48,12 +48,12 @@ export default function ContactSection() {
   }
 
   return (
-    <section id="contact" className="relative py-24 lg:py-32 bg-background">
+    <section id="contact" className="relative py-24 lg:py-32 tablet-landscape:py-14 bg-background">
       <div className="max-w-7xl mx-auto px-6 lg:px-8">
-        <div className="grid lg:grid-cols-12 gap-16 lg:gap-20">
+        <div className="grid lg:grid-cols-12 gap-16 lg:gap-20 tablet-landscape:gap-10">
 
           {/* LEFT COLUMN - INFO */}
-          <div className="lg:col-span-5 space-y-12 lg:sticky lg:top-28 self-start">
+          <div className="contact-sticky-col lg:col-span-5 space-y-12 tablet-landscape:space-y-8 lg:sticky lg:top-28 self-start">
             <div>
               <div className="flex items-center gap-3 mb-4">
                 <FiShield className="size-6 text-primary" />
@@ -62,7 +62,7 @@ export default function ContactSection() {
                 </span>
               </div>
 
-              <h2 className="text-6xl md:text-7xl lg:text-7xl font-black tracking-tighter leading-none text-foreground">
+              <h2 className="text-6xl md:text-7xl lg:text-7xl tablet-landscape:text-5xl font-black tracking-tighter leading-none text-foreground">
                 Let&apos;s Build<br />
                 <span className="bg-linear-to-r from-primary via-violet-500 to-emerald-500 bg-clip-text text-transparent">
                   Something Great.

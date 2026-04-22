@@ -46,9 +46,9 @@ export default function Header() {
 
   return (
     <>
-      <header className="fixed top-3 left-0 right-0 z-50 flex justify-center px-3">
+      <header data-site-header className="fixed top-3 landscape-sm:top-1 left-0 right-0 z-50 flex justify-center px-3">
         <div
-          className="w-full max-w-7xl border border-white/10 dark:border-white/20 bg-white/90 dark:bg-[#121212]/95 backdrop-blur-md shadow-sm flex items-center justify-between px-4 md:px-8 py-3.5 rounded-2xl relative"
+          className="w-full max-w-7xl border border-white/10 dark:border-white/20 bg-white/90 dark:bg-[#121212]/95 backdrop-blur-md shadow-sm flex items-center justify-between px-4 md:px-8 py-3.5 landscape-sm:py-1.5 rounded-2xl relative"
         >
           {/* LOGO */}
           <Link href="/" className="flex items-center gap-2.5 group">
@@ -64,7 +64,7 @@ export default function Header() {
 
           {/* DESKTOP NAV */}
           {!isMobile && (
-            <nav className="flex items-center gap-10">
+            <nav className="flex items-center gap-10 tablet-landscape:gap-5">
               {mainNav.map((item) => {
                 const isActive = pathname === item.href
                 return (
@@ -192,14 +192,14 @@ export default function Header() {
           )}
 
           {/* ACTIONS */}
-          <div className="flex items-center gap-3">
+          <div className="flex items-center gap-3 tablet-landscape:gap-2">
             <ThemeToggleSwitch />
 
             {!isMobile && (
               <Link
                 href="/booking"
                 onClick={() => setShowExtra(false)}
-                className="bg-foreground text-background font-black transition-all hover:scale-105 active:scale-95 px-6 py-2 text-sm"
+                className="bg-foreground text-background font-black transition-all hover:scale-105 active:scale-95 px-6 py-2 tablet-landscape:px-4 tablet-landscape:py-1.5 text-sm"
               >
                 Book a Call
               </Link>

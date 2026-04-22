@@ -36,7 +36,7 @@ const itemVariants: Variants = {
 
 export default function AboutPage() {
   return (
-    <div className="relative min-h-screen bg-background py-24 lg:py-32 px-6 lg:px-8 overflow-hidden">
+    <div className="about-section relative min-h-screen bg-background py-24 lg:py-32 tablet-landscape:py-14 px-6 lg:px-8 overflow-hidden">
       
       {/* Background Pattern */}
       <div className="absolute inset-0 -z-10 opacity-20 dark:opacity-10 pointer-events-none">
@@ -55,7 +55,7 @@ export default function AboutPage() {
           variants={containerVariants}
           initial="hidden"
           animate="visible"
-          className="space-y-24"
+          className="space-y-24 tablet-landscape:space-y-14"
         >
 
           {/* HERO SECTION */}
@@ -68,7 +68,7 @@ export default function AboutPage() {
               </span>
             </div>
 
-            <h1 className="text-6xl md:text-7xl lg:text-8xl font-black tracking-tighter leading-none text-foreground">
+            <h1 className="text-6xl md:text-7xl lg:text-8xl tablet-landscape:text-5xl font-black tracking-tighter leading-none text-foreground">
               Engineering<br />
               <span className="bg-linear-to-r from-primary via-violet-500 to-emerald-500 bg-clip-text text-transparent">
                 Mindset.
@@ -183,7 +183,7 @@ export default function AboutPage() {
           {/* FINAL CTA */}
           <motion.section
             variants={itemVariants}
-            className="bg-linear-to-br from-primary to-violet-600 text-primary-foreground rounded-3xl p-12 md:p-16 text-center"
+            className="bg-linear-to-br from-primary to-violet-600 text-primary-foreground rounded-3xl p-12 md:p-16 tablet-landscape:p-8 text-center"
           >
             <div className="max-w-2xl mx-auto space-y-8">
               <h2 className="text-4xl md:text-5xl font-black tracking-tighter">

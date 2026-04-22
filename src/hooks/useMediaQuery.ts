@@ -18,9 +18,9 @@ export function useMediaQuery(query: string): boolean | null {
 }
 
 export function useIsMobile() {
-  return useMediaQuery('(max-width: 768px)')
+  return useMediaQuery('(max-width: 768px), ((orientation: landscape) and (max-height: 500px))')
 }
 
 export function useIsDesktop() {
-  return useMediaQuery('(min-width: 769px)')
+  return useMediaQuery('(min-width: 769px) and not ((orientation: landscape) and (max-height: 500px))')
 }

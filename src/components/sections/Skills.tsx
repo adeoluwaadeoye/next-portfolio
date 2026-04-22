@@ -65,7 +65,7 @@ const DOMAINS = [
 
 export default function SkillsSection() {
     return (
-        <section className="relative bg-background py-24 overflow-hidden">
+        <section className="relative bg-background py-24 tablet-landscape:py-14 overflow-hidden">
 
             <div className="max-w-7xl mx-auto px-6 relative z-10">
 
@@ -75,7 +75,7 @@ export default function SkillsSection() {
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true }}
                     transition={{ duration: 0.6 }}
-                    className="mb-20"
+                    className="mb-20 tablet-landscape:mb-10"
                 >
                     <Badge
                         variant="outline"
@@ -85,7 +85,7 @@ export default function SkillsSection() {
                     </Badge>
 
                     <div className="flex flex-col md:flex-row md:items-end justify-between gap-6">
-                        <h1 className="text-6xl md:text-8xl font-black tracking-tighter leading-[0.88] uppercase text-foreground">
+                        <h1 className="text-6xl md:text-8xl tablet-landscape:text-5xl font-black tracking-tighter leading-[0.88] uppercase text-foreground">
                             Technical<br />
                             <span className="bg-linear-to-r from-primary via-violet-500 to-emerald-500 bg-clip-text text-transparent italic">
                                 Expertise.

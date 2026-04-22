@@ -21,7 +21,7 @@ const Experience = () => {
   });
 
   return (
-    <section id="experience" className="relative py-24 lg:py-32 bg-background overflow-hidden">
+    <section id="experience" className="relative py-24 lg:py-32 tablet-landscape:py-14 bg-background overflow-hidden">
       
       {/* Fixed Progress Bar */}
       <motion.div 
@@ -33,7 +33,7 @@ const Experience = () => {
       <div className="max-w-6xl mx-auto px-6 relative z-10">
         
         {/* Header */}
-        <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-8 mb-20">
+        <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-8 mb-20 tablet-landscape:mb-10">
           <div>
             <div className="flex items-center gap-3 mb-4">
               <Cpu className="w-5 h-5 text-primary" />

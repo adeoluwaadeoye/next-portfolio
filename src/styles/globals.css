@@ -3,6 +3,8 @@
 @import "shadcn/tailwind.css";
 
 @custom-variant dark (&:is(.dark *));
+@custom-variant landscape-sm (@media (orientation: landscape) and (max-height: 500px));
+@custom-variant tablet-landscape (@media (orientation: landscape) and (min-width: 768px) and (min-height: 501px) and (max-height: 900px));
 
 @theme inline {
   --color-background: var(--background);
@@ -187,4 +189,41 @@ html body[data-scroll-locked] {
 .rdp-table {
   width: 100%;
   max-width: 100%;
+}
+
+/* ── Tablet Landscape Responsive Fixes (768px–∞ wide, 501–900px tall) ──── */
+@media (orientation: landscape) and (min-width: 768px) and (min-height: 501px) and (max-height: 900px) {
+  /* Compact the fixed header nav so items don't crowd at 1024px */
+  header[data-site-header] nav {
+    gap: 1.25rem;
+  }
+
+  /* About page: content is always taller than the viewport, no need to force min-h */
+  .about-section {
+    min-height: 0;
+  }
+
+  /* Contact sticky sidebar: align with the compact header offset */
+  .contact-sticky-col {
+    top: 5rem;
+  }
+}
+
+/* ── Landscape Mobile Responsive Fixes ──────────────────────────────────── */
+@media (orientation: landscape) and (max-height: 500px) {
+  /* Tighten the fixed header so it doesn't eat vertical space */
+  header[data-site-header] {
+    top: 0.25rem;
+  }
+  header[data-site-header] > div {
+    padding-top: 0.375rem;
+    padding-bottom: 0.375rem;
+  }
+
+  /* Hero: don't force a full viewport height in short landscape viewports */
+  .hero-section {
+    min-height: 100svh;
+    padding-top: 5rem;
+    padding-bottom: 2rem;
+  }
 }
