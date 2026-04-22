@@ -68,7 +68,7 @@ export default function Projects() {
                       src={project.image}
                       alt={project.title}
                       fill
-                      sizes='100vw'
+                      sizes="(max-width: 768px) calc(100vw - 3rem), 1104px"
                       priority
                       className="object-cover transition-transform duration-[1.2s] group-hover:scale-105"
                     />
