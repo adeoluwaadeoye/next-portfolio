@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useRef, useState, useMemo, useEffect } from 'react'
+import React, { useRef, useState, useMemo } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
 import {
@@ -21,10 +21,10 @@ import { projects, Project } from '@/data/projects'
 
 // ─── Secondary images ─────────────────────────────────────────────────────────
 const SECONDARY: Record<number, string | null> = {
-  1: '/assets/project1a.jpg',
-  2: '/assets/project2a.jpg',
-  3: '/assets/project3a.jpg',
-  4: null,
+  1: '/assets/projects/ziva2.jpg',
+  2: '/assets/projects/adminhub2.jpg',
+  3: '/assets/projects/invoicely2.jpg',
+  4: '/assets/projects/project-tracker2.jpg',
 }
 
 // ─── Tech icons ───────────────────────────────────────────────────────────────
@@ -61,7 +61,7 @@ const META: Record<number, Meta> = {
     status: 'live', role: 'Full-Stack', year: '2024', duration: '5 wks', complexity: 3,
     highlights: [
       'Kanban board with real-time drag-and-drop',
-      'Google & GitHub OAuth via Passport.js',
+      'Google OAuth via Passport.js',
       'Admin analytics dashboard with live metrics',
       'Dockerized — zero-config local & cloud deploy',
     ],
@@ -146,13 +146,11 @@ function TechPill({ tech }: { tech: string }) {
 // pointerType check separates desktop hover from touch tap — no double-fire.
 function ProjectImage({ project }: { project: Project }) {
   const [hovered, setHovered] = useState(false)
-  const [isTouch, setIsTouch] = useState(false)
+  const [isTouch] = useState(() =>
+    typeof window !== 'undefined' ? !window.matchMedia('(hover: hover)').matches : false
+  )
   const ref = useRef<HTMLDivElement>(null)
   const isInView = useInView(ref, { margin: '-15% 0px -15% 0px' })
-
-  useEffect(() => {
-    setIsTouch(!window.matchMedia('(hover: hover)').matches)
-  }, [])
 
   const active = isTouch ? isInView : hovered
 
