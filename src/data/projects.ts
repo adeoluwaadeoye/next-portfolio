@@ -56,6 +56,27 @@ export const projects: Project[] = [
 
   {
     id: 3,
+    title: "Job Tracker AI",
+    description:
+      "A full-stack web application that helps engineers track job applications intelligently. Paste any job description and AI instantly extracts the role details, required skills, and writes a tailored cover letter. Built with Next.js, MongoDB, and Groq.",
+    stack: [
+      "Next.js",
+      "TypeScript",
+      "Tailwind CSS",
+      "Node.js",
+      "MongoDB",
+      "Groq",
+      "Prisma",
+      "Vercel",
+    ],
+    image: "/assets/projects/project-tracker1.jpg",
+    liveUrl: "https://job-tracker-phi-plum.vercel.app/",
+    githubUrl: "https://github.com/adeoluwaadeoye/job-tracker",
+    category: "AI Productivity Tool",
+  },
+
+  {
+    id: 4,
     title: "Invoicely SaaS",
     description:
       "A full-stack multi-tenant SaaS invoicing application built with Next.js 16, MongoDB, Clerk, Paystack, and Resend. Built as a portfolio project to demonstrate production-grade fullstack engineering skills. Includes authentication, invoice automation, and payment workflows.",
@@ -74,26 +95,5 @@ export const projects: Project[] = [
     liveUrl: "https://invoicely-chi-mauve.vercel.app/",
     githubUrl: "https://github.com/adeoluwaadeoye/invoicely",
     category: "SaaS Platform",
-  },
-
-  {
-    id: 4,
-    title: "Job Tracker AI",
-    description:
-      "A full-stack web application that helps engineers track job applications intelligently. Paste any job description and AI instantly extracts the role details, required skills, and writes a tailored cover letter. Built with Next.js, MongoDB, and Groq.",
-    stack: [
-      "Next.js",
-      "TypeScript",
-      "Tailwind CSS",
-      "Node.js",
-      "MongoDB",
-      "Groq",
-      "Prisma",
-      "Vercel",
-    ],
-    image: "/assets/projects/project-tracker1.jpg",
-    liveUrl: "https://job-tracker-phi-plum.vercel.app/",
-    githubUrl: "https://github.com/adeoluwaadeoye/job-tracker",
-    category: "AI Productivity Tool",
   },
 ];

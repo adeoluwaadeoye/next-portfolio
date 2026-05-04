@@ -23,8 +23,8 @@ import { projects, Project } from '@/data/projects'
 const SECONDARY: Record<number, string | null> = {
   1: '/assets/projects/ziva2.jpg',
   2: '/assets/projects/adminhub2.jpg',
-  3: '/assets/projects/invoicely2.jpg',
-  4: '/assets/projects/project-tracker2.jpg',
+  3: '/assets/projects/project-tracker2.jpg',
+  4: '/assets/projects/invoicely2.jpg',
 }
 
 // ─── Tech icons ───────────────────────────────────────────────────────────────
@@ -93,25 +93,25 @@ const META: Record<number, Meta> = {
       'Kanban tracker with filter, sort, and status columns',
       'Prisma ORM with MongoDB — fully typed query layer',
     ],
-    metrics: [{ label: 'LLM', value: 'Groq' }, { label: 'Model', value: 'LLaMA' }, { label: 'Status', value: 'Beta' }],
+    metrics: [{ label: 'LLM', value: 'Groq' }, { label: 'Model', value: 'LLaMA' }, { label: 'Status', value: 'Live' }],
     architecture: 'Next.js App Router + Prisma/MongoDB, streaming AI responses via edge API routes',
     deployment: 'Vercel Edge for AI inference routes, ISR for static pages, optimistic mutations',
     security: 'Auth-protected routes, rate-limited AI endpoints, sanitized & structured LLM prompts',
     performance: 'Sub-second Groq inference, response streaming, optimistic kanban state without refetch',
   },
   4: {
-    status: 'development', role: 'Full-Stack', year: '2025', duration: '8 wks', complexity: 3,
+    status: 'live', role: 'Full-Stack', year: '2025', duration: '4 wks', complexity: 3,
     highlights: [
-      'Real-time co-editing with conflict-free CRDT merging',
-      'Live team presence — cursors, avatars, activity feed',
-      'Embedded code snippet blocks with syntax highlighting',
-      'Project boards with drag-and-drop task management',
+      'Multi-tenant SaaS with org-level data isolation',
+      'Paystack payment gateway with webhook handler',
+      'Automated invoice PDF emails via Resend API',
+      'Clerk RBAC with organization & team roles',
     ],
-    metrics: [{ label: 'Stack', value: 'WS' }, { label: 'Collab', value: 'Live' }, { label: 'Status', value: 'Soon' }],
-    architecture: 'Next.js App Router + Socket.io, CRDT-based operational transforms for real-time sync',
-    deployment: 'Vercel frontend; Socket.io on Railway with sticky sessions and horizontal scaling',
-    security: 'JWT-authenticated WebSocket handshake, room-scoped access control, rate-limited broadcasts',
-    performance: 'Sub-50ms latency with event batching, optimistic local state, lazy-loaded doc history',
+    metrics: [{ label: 'Invoices', value: '200+' }, { label: 'Tenants', value: '10+' }, { label: 'Perf', value: '91' }],
+    architecture: 'Next.js 15 Server Components, Clerk multi-org tenancy, MongoDB scoped per organization',
+    deployment: 'Vercel Edge with automatic preview deployments per PR and production promotion flow',
+    security: 'Clerk RBAC org roles, Paystack webhook HMAC verification, server-side validation',
+    performance: '91 Lighthouse — React Server Components, optimistic UI, lazy-loaded invoice lists',
   },
 }
 

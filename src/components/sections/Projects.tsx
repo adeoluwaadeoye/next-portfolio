@@ -19,6 +19,8 @@ const DIVIDER_ICONS = [FiCpu, FiShield, FiBox];
 export default function Projects() {
   const [activeProject, setActiveProject] = useState<Project | null>(null);
 
+  const displayedProjects = projects.slice(0, 3);
+
   return (
     <section id="projects" className="py-4 max-w-6xl mx-auto px-6 relative">
 
@@ -42,7 +44,7 @@ export default function Projects() {
 
       {/* 2. PROJECT STACK */}
       <div className="space-y-4">
-        {projects.slice(0, 4).map((project, index) => {
+        {displayedProjects.map((project, index) => {
           const IconComponent = DIVIDER_ICONS[index % DIVIDER_ICONS.length];
           const accentColor = ACCENTS[index % ACCENTS.length];
 
@@ -155,7 +157,7 @@ export default function Projects() {
               </motion.div>
 
               {/* PARALLEL LINE DIVIDER */}
-              {index !== projects.length - 1 && (
+              {index !== displayedProjects.length - 1 && (
                 <div className="h-16 relative flex items-center justify-center w-full overflow-hidden">
                   <div className="absolute inset-0 flex flex-col justify-center gap-1.5 px-4">
                     <motion.div
